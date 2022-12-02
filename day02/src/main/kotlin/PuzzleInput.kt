@@ -2498,5 +2498,5 @@ A Z
 A Z
 A X
 A X
-A Z    
+A Z
 """.trimIndent().split("\n")
