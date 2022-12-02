@@ -4,13 +4,17 @@ enum class Item(val resultValue: Int) {
 
 val itemMap = mapOf("A" to Item.Rock, "B" to Item.Paper, "C" to Item.Scissors, "X" to Item.Rock, "Y" to Item.Paper, "Z" to Item.Scissors)
 
-val winMap = mapOf( Item.Rock to Item.Scissors, Item.Scissors to Item.Paper, Item.Paper to Item.Rock )
+val resultMap = mapOf(
+    Pair(Item.Rock, Item.Scissors) to 6,
+    Pair(Item.Paper, Item.Rock) to 6,
+    Pair(Item.Scissors, Item.Paper) to 6,
+    Pair(Item.Rock, Item.Rock) to 3,
+    Pair(Item.Paper, Item.Paper) to 3,
+    Pair(Item.Scissors, Item.Scissors) to 3,
+)
 
 data class Round(val theirs: Item, val yours: Item) {
-    fun yourScore() = yours.resultValue +
-        if ( winMap[yours] == theirs)  6
-        else if ( theirs == yours) 3
-        else 0
+    fun yourScore() = yours.resultValue + (resultMap[Pair(yours, theirs)] ?: 0)
 }
 
 fun parseInput(data: List<String>, lineParser: (String)->Round ) = data.map(lineParser)
