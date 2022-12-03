@@ -1,13 +1,13 @@
-data class Rucksack(val left:List<Char>, val right:List<Char>, val all:List<Char> = left + right) {
+data class Rucksack(val left:String, val right:String, val all:String = left + right) {
     fun findFirstInBothSides() = left.first{ right.contains(it)}
     fun findCodeForFirstInBothSides() = findFirstInBothSides().toValue()
 }
 
 fun String.toRucksack() = Rucksack(firstHalf(), secondHalf())
 
-fun String.firstHalf() = toList().take(length/2)
+fun String.firstHalf() = substring(0, length/2 )
 
-fun String.secondHalf() = toList().drop(length/2)
+fun String.secondHalf() = substring(length/2)
 
 fun Char.toValue() = if (this >= 'a') code - 96 else code - 38
 

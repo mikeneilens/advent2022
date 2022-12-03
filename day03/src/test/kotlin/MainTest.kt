@@ -13,14 +13,14 @@ class MainTest: WordSpec( {
     """.trimIndent().split("\n")
 
     "Part one" should ({
-        "convert first half of abcd is [a,b]" {
-            "abcd".firstHalf() shouldBe listOf('a','b')
+        "convert first half of abcd is ab" {
+            "abcd".firstHalf() shouldBe "ab"
         }
-        "convert second half of abcd is [c,d]" {
-            "abcd".secondHalf() shouldBe listOf('c','d')
+        "convert second half of abcd is cd" {
+            "abcd".secondHalf() shouldBe "cd"
         }
         "parse abcd into Rucksack([a,b],[c,d])" {
-            "abcd".toRucksack() shouldBe Rucksack(listOf('a','b'), listOf('c','d'),listOf('a','b','c','d'))
+            "abcd".toRucksack() shouldBe Rucksack("ab", "cd","abcd")
         }
         "find first item in vJrwpWtwJgWrhcsFMMfFFhFp contains in both sides is p" {
             val rucksack = "vJrwpWtwJgWrhcsFMMfFFhFp".toRucksack()
