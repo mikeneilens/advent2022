@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T20:36:45" hostname="MacBook-Pro-2" time="0.025">
+<testsuite name="MainTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2022-12-03T06:07:08" hostname="MacBook-Pro-2" time="0.087">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.018"/>
-  <testcase name="test" classname="MainTest" time="0.0"/>
+  <testcase name="first half of abcd is [a,b]" classname="MainTest" time="0.02"/>
+  <testcase name="second half of abcd is [c,d]" classname="MainTest" time="0.001"/>
+  <testcase name="parse abcd into Rucksack([a,b],[c,d])" classname="MainTest" time="0.006"/>
+  <testcase name="find first item in vJrwpWtwJgWrhcsFMMfFFhFp contains in both sides is p" classname="MainTest" time="0.014"/>
+  <testcase name="find value of first item in vJrwpWtwJgWrhcsFMMfFFhFp contains in both sides is p" classname="MainTest" time="0.002"/>
+  <testcase name="convert a to value of 1" classname="MainTest" time="0.0"/>
+  <testcase name="convert A to value of 27" classname="MainTest" time="0.001"/>
+  <testcase name="part one with sample input is 157" classname="MainTest" time="0.0"/>
+  <testcase name="part one with puzzle input is 7763" classname="MainTest" time="0.005"/>
+  <testcase name="badge in first 3 bags of puzzle input is r" classname="MainTest" time="0.002"/>
+  <testcase name="badge in second 3 bags of puzzle input is Z" classname="MainTest" time="0.0"/>
+  <testcase name="code of badge in first 3 bags of puzzle input is r" classname="MainTest" time="0.001"/>
+  <testcase name="part two with sample input is 70" classname="MainTest" time="0.001"/>
+  <testcase name="part two with sample input is 2569" classname="MainTest" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
