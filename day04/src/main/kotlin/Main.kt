@@ -3,8 +3,7 @@ data class Assignment (val start:Int, val end:Int ) {
 }
 
 data class Section(val first:Assignment, val second:Assignment) {
-    fun assignmentContainsOtherAssignment() =
-        first.insideOther(second) || second.insideOther(first)
+    fun assignmentContainsOtherAssignment() = first.insideOther(second) || second.insideOther(first)
 
     fun assignmentsOverlap():Boolean {
         val section = getAssignmentsInOrder()
