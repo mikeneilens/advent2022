@@ -5,12 +5,8 @@ data class Assignment (val start: Int, val end: Int ) {
 data class Section(val firstAssignment: Assignment, val secondAssignment: Assignment) {
     fun assignmentContainsOtherAssignment() = firstAssignment.insideOther(secondAssignment) || secondAssignment.insideOther(firstAssignment)
 
-    fun assignmentsOverlap():Boolean {
-        val section = getAssignmentsInOrder()
-        return (section.secondAssignment.start <= section.firstAssignment.end)
-    }
+    fun assignmentsOverlap() = !(secondAssignment.start > firstAssignment.end || firstAssignment.start > secondAssignment.end )
 
-    fun getAssignmentsInOrder() = if (firstAssignment.start <= secondAssignment.start) this else Section(secondAssignment, firstAssignment)
 }
 
 fun String.toSection():Section {

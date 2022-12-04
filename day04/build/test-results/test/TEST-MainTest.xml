@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-12-04T07:09:54" hostname="MacBook-Pro-2" time="0.054">
+<testsuite name="MainTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-12-04T10:23:01" hostname="MacBook-Pro-2" time="0.049">
   <properties/>
   <testcase name="sampleInput with part one contains two assignments with one inside the other" classname="MainTest" time="0.02"/>
-  <testcase name="puzzleInput with part one contains 571 assignments with one inside the other" classname="MainTest" time="0.015"/>
-  <testcase name="sampleInput with part two contains 4 pairs with one inside the other" classname="MainTest" time="0.001"/>
-  <testcase name="puzzleInput with part two contains 917 pairs with one inside the other" classname="MainTest" time="0.005"/>
+  <testcase name="puzzleInput with part one contains 571 assignments with one inside the other" classname="MainTest" time="0.014"/>
+  <testcase name="sampleInput with part two contains 4 pairs with one inside the other" classname="MainTest" time="0.0"/>
+  <testcase name="puzzleInput with part two contains 917 pairs with one inside the other" classname="MainTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
