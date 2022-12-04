@@ -8,7 +8,6 @@ data class Section(val firstAssignment: Assignment, val secondAssignment: Assign
     fun assignmentContainsOtherAssignment() = (firstAssignment isInside secondAssignment) || (secondAssignment isInside firstAssignment)
 
     fun assignmentsOverlap() = (firstAssignment overlaps secondAssignment) || (secondAssignment overlaps firstAssignment)
-
 }
 
 fun String.toSection():Section {
