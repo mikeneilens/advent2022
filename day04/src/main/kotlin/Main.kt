@@ -1,11 +1,13 @@
 data class Assignment (val start: Int, val end: Int ) {
-    fun insideOther(other: Assignment) = start <= other.start && end >= other.end
+    infix fun isInside(other: Assignment) = start <= other.start && end >= other.end
+
+    infix fun overlaps(other: Assignment) = (end in other.start..other.end) || (start in other.start..other.end)
 }
 
 data class Section(val firstAssignment: Assignment, val secondAssignment: Assignment) {
-    fun assignmentContainsOtherAssignment() = firstAssignment.insideOther(secondAssignment) || secondAssignment.insideOther(firstAssignment)
+    fun assignmentContainsOtherAssignment() = (firstAssignment isInside secondAssignment) || (secondAssignment isInside firstAssignment)
 
-    fun assignmentsOverlap() = !(secondAssignment.start > firstAssignment.end || firstAssignment.start > secondAssignment.end )
+    fun assignmentsOverlap() = (firstAssignment overlaps secondAssignment) || (secondAssignment overlaps firstAssignment)
 
 }
 
