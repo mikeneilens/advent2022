@@ -1,55 +1,57 @@
-fun helloWorld() = "hello world"
-
+typealias InputData = List<String>
 typealias Stack = List<Char>
 typealias Stacks = List<Stack>
+
+fun Stack() = emptyList<Char>()
 
 data class Command(val qty:Int, val from:Int, val to:Int)
 
 //This is all the parsing stuff!
-fun String.charAt(index:Int) = get(index * 4 + 1)
+fun initialiseStacks(data: InputData) = data.findStackData().fold(data.createEmptyStacks()){ stacks, line ->  line.addToStacks(stacks)}
 
-fun initialiseStacks(data: List<String>) = data.toStackData().fold(data.toStacks()){ stacks, line ->  line.addToStacks(stacks)}
-
-fun List<String>.toStacks() = (1..noOfStacks()).map{listOf<Char>()}
-
-fun List<String>.noOfStacks() = first{it.startsWith(" 1")}.trim().split("   ").map(String::toInt).last()
-
-fun List<String>.toStackData() = filter { it.startsWith(' ') || it.startsWith('[') }.reversed().drop(1)
+fun InputData.createEmptyStacks() = (1..noOfStacks).toList().map{Stack()}
 
 fun String.addToStacks(stacks: Stacks) = stacks.mapIndexed{ index, stack -> addLineToStack(index, stack, this)}
 
 fun addLineToStack(index: Int, stack: Stack, line: String):Stack = if (line.charAt(index) != ' ') stack + line.charAt(index) else stack
 
-fun parseIntoCommands(data: List<String>):List<Command> = data.filter{it.startsWith("move")}.map(String::toCommand)
+fun String.charAt(index:Int) = get(index * 4 + 1)
+
+fun parseIntoCommands(data: InputData):List<Command> = data.findMoveData().map(String::toCommand)
 
 fun String.toCommand(): Command {
     val components = removePrefix("move ").split(" from ", " to ").map(String::toInt)
     return Command(components[0],components[1] -1,components[2] -1)
 }
 
+fun InputData.findStackData() = filter { it.startsWith(' ') || it.startsWith('[') }.reversed().drop(1)
+fun InputData.findQtyData() = first{it.startsWith(" 1")}.trim()
+fun InputData.findMoveData() = filter{it.startsWith("move")}
+val InputData.noOfStacks get() = findQtyData().split("   ").last().toInt()
+
 //Actual part one
-fun partOne(data:List<String>):String {
+fun partOne(data: InputData):String {
     val commands = parseIntoCommands(data)
     val stacks = initialiseStacks(data)
-    return commands.process(stacks, Stacks::mover).map{it.last()}.joinToString("")
+    return stacks.process(commands, Stacks::crateMover9000).map{it.last()}.joinToString("")
 }
 
-fun List<Command>.process(stacks: Stacks, mover: Stacks.(Command)-> Stacks) = fold(stacks){ latestStacks, command -> latestStacks.mover(command)}
+fun Stacks.process(commands: List<Command>, mover: Stacks.(Command)-> Stacks) = commands.fold(this){ stacks, command -> stacks.mover(command)}
 
-fun Stacks.mover(command: Command) = mapIndexed { index, stack -> move(index, stack,command) }
+fun Stacks.crateMover9000(command: Command) = mapIndexed { index, stack -> move(index, stack,command, true) }
 
-fun Stacks.move(index:Int, stack:Stack, command: Command, shouldReverse:Boolean = true) =  when(true) {
+fun Stacks.move(index:Int, stack:Stack, command: Command, shouldReverseStack:Boolean) =  when(true) {
     (command.from == index  ) -> stack.dropLast(command.qty)
-    (command.to == index && shouldReverse ) -> stack + this[command.from].takeLast(command.qty).reversed()
-    (command.to == index && !shouldReverse ) -> stack + this[command.from].takeLast(command.qty)
+    (command.to == index && shouldReverseStack ) -> stack + this[command.from].takeLast(command.qty).reversed()
+    (command.to == index  ) -> stack + this[command.from].takeLast(command.qty)
     else -> stack
 }
 
 //Actual part two
-fun partTwo(data:List<String>):String {
+fun partTwo(data: InputData):String {
     val commands = parseIntoCommands(data)
     val stacks = initialiseStacks(data)
-    return commands.process(stacks, Stacks::mover2).map{it.last()}.joinToString("")
+    return stacks.process(commands, Stacks::crateMover9001).map{it.last()}.joinToString("")
 }
 
-fun Stacks.mover2(command: Command) = mapIndexed { index, stack -> move(index, stack,command, false) }
+fun Stacks.crateMover9001(command: Command) = mapIndexed { index, stack -> move(index, stack,command, false) }

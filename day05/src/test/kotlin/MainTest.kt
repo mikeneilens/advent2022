@@ -17,11 +17,11 @@ move 1 from 1 to 2
     "Part one" should ({
         "add a line of text to a list of stacks" {
             val line = "[G] [L] [M] [S] [S] [C]     [T] [V]"
-            val stacks:Stacks = listOf(listOf(),listOf(),listOf(),listOf(),listOf(),listOf(),listOf(),listOf(),listOf())
+            val stacks:Stacks = (1..9).toList().map{Stack()}
             line.addToStacks(stacks) shouldBe listOf(listOf('G'),listOf('L'),listOf('M'),listOf('S'),listOf('S'),listOf('C'),listOf(),listOf('T'),listOf('V'))
         }
         "calculate no of stacks on sample data is 3" {
-            sampleData.noOfStacks() shouldBe 3
+            sampleData.noOfStacks shouldBe 3
         }
         "initialise stacks from puzzle input" {
             initialiseStacks(puzzleInput)[0] shouldBe listOf('R','N','P','G')
@@ -38,7 +38,7 @@ move 1 from 1 to 2
         "one crate is moved from stack 2 to stack 1" {
             val stacks = initialiseStacks(sampleData)
             val command = Command(1, 1, 0)
-            val newStacks  = stacks.mover(command)
+            val newStacks  = stacks.crateMover9000(command)
             newStacks[0] shouldBe listOf('Z','N','D')
             newStacks[1] shouldBe listOf('M','C')
             newStacks[2] shouldBe listOf('P')
@@ -46,7 +46,7 @@ move 1 from 1 to 2
         "process all stacks for sample data should be CMZ" {
             val stacks = listOf(listOf('Z', 'N'), listOf('M', 'C', 'D'), listOf('P'))
             val commands = listOf(Command(qty=1, from=1, to=0), Command(qty=3, from=0, to=2), Command(qty=2, from=1, to=0), Command(qty=1, from=0, to=1))
-            commands.process(stacks, Stacks::mover) shouldBe listOf(listOf('C'),listOf('M'), listOf('P', 'D', 'N', 'Z'))
+            stacks.process(commands, Stacks::crateMover9000) shouldBe listOf(listOf('C'),listOf('M'), listOf('P', 'D', 'N', 'Z'))
         }
         "answer for part one using sample data is CMZ " {
             partOne(sampleData) shouldBe "CMZ"
