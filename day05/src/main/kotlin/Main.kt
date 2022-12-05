@@ -33,7 +33,7 @@ val InputData.noOfStacks get() = findQtyData().split("   ").last().toInt()
 fun partOne(data: InputData):String {
     val commands = parseIntoCommands(data)
     val stacks = initialiseStacks(data)
-    return stacks.process(commands, Stacks::crateMover9000).map{it.last()}.joinToString("")
+    return stacks.process(commands, Stacks::crateMover9000).map(Stack::last).joinToString("")
 }
 
 fun Stacks.process(commands: List<Command>, mover: Stacks.(Command)-> Stacks) = commands.fold(this){ stacks, command -> stacks.mover(command)}
@@ -41,9 +41,9 @@ fun Stacks.process(commands: List<Command>, mover: Stacks.(Command)-> Stacks) = 
 fun Stacks.crateMover9000(command: Command) = mapIndexed { index, stack -> move(index, stack,command, true) }
 
 fun Stacks.move(index:Int, stack:Stack, command: Command, shouldReverseStack:Boolean) =  when(true) {
-    (command.from == index  ) -> stack.dropLast(command.qty)
-    (command.to == index && shouldReverseStack ) -> stack + this[command.from].takeLast(command.qty).reversed()
-    (command.to == index  ) -> stack + this[command.from].takeLast(command.qty)
+    (command.from == index) -> stack.dropLast(command.qty)
+    (command.to == index && shouldReverseStack) -> stack + this[command.from].takeLast(command.qty).reversed()
+    (command.to == index) -> stack + this[command.from].takeLast(command.qty)
     else -> stack
 }
 
@@ -51,7 +51,7 @@ fun Stacks.move(index:Int, stack:Stack, command: Command, shouldReverseStack:Boo
 fun partTwo(data: InputData):String {
     val commands = parseIntoCommands(data)
     val stacks = initialiseStacks(data)
-    return stacks.process(commands, Stacks::crateMover9001).map{it.last()}.joinToString("")
+    return stacks.process(commands, Stacks::crateMover9001).map(Stack::last).joinToString("")
 }
 
 fun Stacks.crateMover9001(command: Command) = mapIndexed { index, stack -> move(index, stack,command, false) }
