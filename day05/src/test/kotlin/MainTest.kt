@@ -30,14 +30,14 @@ move 1 from 1 to 2
         "parse sample data into commands" {
             val commands = parseIntoCommands(sampleData)
             commands.size shouldBe 4
-            commands[0] shouldBe Command(1,2,1)
-            commands[1] shouldBe Command(3,1,3)
-            commands[2] shouldBe Command(2,2,1)
-            commands[3] shouldBe Command(1,1,2)
+            commands[0] shouldBe Command(1,1,0)
+            commands[1] shouldBe Command(3,0,2)
+            commands[2] shouldBe Command(2,1,0)
+            commands[3] shouldBe Command(1,0,1)
         }
         "one crate is moved from stack 2 to stack 1" {
             val stacks = initialiseStacks(sampleData)
-            val command = Command(1, 2, 1)
+            val command = Command(1, 1, 0)
             val newStacks  = stacks.mover(command)
             newStacks[0] shouldBe listOf('Z','N','D')
             newStacks[1] shouldBe listOf('M','C')
@@ -45,7 +45,7 @@ move 1 from 1 to 2
         }
         "process all stacks for sample data should be CMZ" {
             val stacks = listOf(listOf('Z', 'N'), listOf('M', 'C', 'D'), listOf('P'))
-            val commands = listOf(Command(qty=1, from=2, to=1), Command(qty=3, from=1, to=3), Command(qty=2, from=2, to=1), Command(qty=1, from=1, to=2))
+            val commands = listOf(Command(qty=1, from=1, to=0), Command(qty=3, from=0, to=2), Command(qty=2, from=1, to=0), Command(qty=1, from=0, to=1))
             commands.process(stacks, Stacks::mover) shouldBe listOf(listOf('C'),listOf('M'), listOf('P', 'D', 'N', 'Z'))
         }
         "answer for part one using sample data is CMZ " {
