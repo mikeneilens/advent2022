@@ -1,8 +1,12 @@
-data class Directory(val name:String, val parent:Directory?, val files:MutableList<File>, val children:MutableList<Directory>) {
+data class Directory(
+    val name:String,
+    val parent:Directory? = null,
+    val files:MutableList<File> = mutableListOf(),
+    val children:MutableList<Directory> = mutableListOf()) {
 
     val size:Int by lazy { files.sumOf { it.size } + children.sumOf { it.size } }
 
-    fun allDirectories():List<Directory> = children.flatMap { directory -> directory.allDirectories()} + this
+    fun allDirectories():List<Directory> = children.flatMap{ directory -> directory.allDirectories()} + this
 
     fun totalSizeOfDirectoriesSmallerThan(max:Int) = allDirectories().filter{it.size <= max}.sumOf { it.size }
 
@@ -10,7 +14,7 @@ data class Directory(val name:String, val parent:Directory?, val files:MutableLi
 
     fun addChildDirectory(name: String):Directory {
         if (children.none{ it.name == name }) {
-            children.add(Directory(name, this, mutableListOf(), mutableListOf()))
+            children.add(Directory(name, this))
         }
         return this
     }
@@ -50,7 +54,7 @@ val processInstruction = mapOf(
 )
 
 fun parseIntoDirectory(data:List<String>):Directory {
-    val root = Directory("root", null, mutableListOf(), mutableListOf())
+    val root = Directory("root")
     data.fold(root) { directory, line ->
         val processor = processInstruction.filter{ it.key matches line }.values.firstOrNull() ?: addFileToDirectory
         processor(line, directory, root)

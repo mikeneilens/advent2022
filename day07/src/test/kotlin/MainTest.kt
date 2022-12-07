@@ -28,12 +28,12 @@ class MainTest: WordSpec( {
         7214296 k
     """.trimIndent().split("\n")
 
-    val root = Directory("root", files = mutableListOf(File("f1",1)), children = mutableListOf(), parent = null)
-    val d1 = Directory("d1", files = mutableListOf(File("f2",2)), children = mutableListOf(), parent = root)
+    val root = Directory("root", files = mutableListOf(File("f1",1)))
+    val d1 = Directory("d1", files = mutableListOf(File("f2",2)), parent = root)
     root.children.add(d1)
-    val d2 = Directory("d2", files = mutableListOf(File("f3",3)), children = mutableListOf(), parent = d1)
+    val d2 = Directory("d2", files = mutableListOf(File("f3",3)), parent = d1)
     d1.children.add(d2)
-    val d3 = Directory("d3", files = mutableListOf(File("f4",4)), children = mutableListOf(), parent = d1)
+    val d3 = Directory("d3", files = mutableListOf(File("f4",4)), parent = d1)
     d1.children.add(d3)
 
     "Part one" should ({
