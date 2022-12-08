@@ -73,11 +73,11 @@ class MainTest: WordSpec( {
             "634545".viewFromEachTreeLeft() shouldBe listOf(0,1,2,3,1,2)
         }
         "scenic score for [1,2] in the sampleData is 4" {
-            val treeTopViews = createTreeTopViews(sampleInput)
+            val treeTopViews = TreeTopViews(sampleInput)
             treeTopViews.viewFrom(1,2) shouldBe 4
         }
         "scenic score for [3,2] in the sampleData is 8" {
-            val treeTopViews = createTreeTopViews(sampleInput)
+            val treeTopViews = TreeTopViews(sampleInput)
             treeTopViews.viewFrom(3,2) shouldBe 8
         }
         "part two with sample data is 8 " {
@@ -85,11 +85,6 @@ class MainTest: WordSpec( {
         }
         "part two with puzzle input is " {
             partTwo(puzzleInput) shouldBe 480000
-        }
-        "check1" {
-            val treeTopViews = createTreeTopViews(puzzleInput)
-            val left = puzzleInput.first().viewFromEachTreeLeft()
-            treeTopViews.viewFromLeft.first() shouldBe left
         }
     })
 })
