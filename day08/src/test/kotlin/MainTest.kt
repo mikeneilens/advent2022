@@ -86,5 +86,14 @@ class MainTest: WordSpec( {
         "part two with puzzle input is " {
             partTwo(puzzleInput) shouldBe 480000
         }
+        " 1234.indexOfPrevious before index = 2 where element >=3 is null " {
+            "1234".toList().indexOfPrevious(2){ it.toString() >= "3" } shouldBe null
+        }
+        " 1434.indexOfPrevious before index = 2 element >=3 is 1 " {
+            "1434".toList().indexOfPrevious(2){ it.toString() >= "3" } shouldBe 1
+        }
+        " 1234.indexOfPrevious before index = 0 element >=3 is null " {
+            "1234".toList().indexOfPrevious(0){ it.toString() >= "3" } shouldBe null
+        }
     })
 })

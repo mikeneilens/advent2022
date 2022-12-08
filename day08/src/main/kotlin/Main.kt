@@ -55,14 +55,16 @@ data class TreeTopViews(val rows: List<String>) {
          viewFromLeft[row][col] * viewFromRight[row][size - col - 1] * viewDown[col][row] * viewUp[col][size - row -1 ]
 }
 
-fun String.viewFromEachTreeLeft() = mapIndexed{index, _ -> treesVisibleBefore(index)}
+fun String.viewFromEachTreeLeft() = mapIndexed{index, tree -> treesVisibleBefore(index, tree)}
 
-fun String.treesVisibleBefore(index:Int):Int {
+fun String.treesVisibleBefore(index:Int, tree:Char):Int {
     if (index == 0) return 0
-    val char = get(index).toString()
-    var count = 1
-    while (index - count >= 0 && count < index && get(index - count).toString() < char &&(get(index - count).toString() < char))  {
-        count++
-    }
-    return count
+    val blockingTree = toList().indexOfPrevious(index){ it >= tree}
+    return index - (blockingTree ?: 0)
+}
+
+fun <T>List<T>.indexOfPrevious(startIndex:Int, selector:(T)->Boolean):Int? {
+    var previous = startIndex
+    takeWhile{ previous -= 1; (previous >=  0 && !selector(get(previous)))}
+    return if (previous < 0) null else previous
 }
