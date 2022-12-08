@@ -14,7 +14,7 @@ class MainTest: WordSpec( {
             "33549".highestOnLine() shouldBe listOf('3','3','5','5','9')
         }
         "sample Input columns are 32633, 05535, 35353, 71349, 32290" {
-            sampleInput.toColumns(sampleInput.first().length) shouldBe listOf("32633", "05535", "35353", "71349", "32290")
+            sampleInput.toColumns() shouldBe listOf("32633", "05535", "35353", "71349", "32290")
         }
         "[0][1] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)

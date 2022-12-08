@@ -1,5 +1,5 @@
 
-fun List<String>.toColumns(size:Int):List<String> {
+fun List<String>.toColumns():List<String> {
     val columns = (1..size).map{mutableListOf<Char>()}
     forEach { line ->
         line.forEachIndexed { col, char ->
@@ -10,7 +10,7 @@ fun List<String>.toColumns(size:Int):List<String> {
 }
 
 data class HeightMap(val rows:List<String>, val size:Int = rows.size) {
-    private val columns = rows.toColumns(size)
+    private val columns = rows.toColumns()
     val highestFromLeft:List<List<Char>> = rows.map{it.highestOnLine()}
     val highestFromRight = rows.map { it.reversed().highestOnLine() }
     val highestFromTop = columns.map{it.highestOnLine()}
@@ -29,8 +29,8 @@ fun isHighest(treeSize: Char, row:List<Char>, col:Int) = ( treeSize == row[col] 
 
 fun partOne(rows: List<String>):Int {
     val heightMap = HeightMap(rows)
-    return (0 until heightMap.size).sumOf { row ->
-        (0 until heightMap.size).count { col ->
+    return (rows.indices).sumOf { row ->
+        (rows.indices).count { col ->
             isVisible(rows[row][col], row, col, heightMap)
         }
     }
@@ -44,12 +44,12 @@ fun partTwo(rows: List<String>):Int {
 }
 
 data class TreeTopViews(val rows: List<String>) {
-    val columns= rows.toColumns(rows.size)
-    val viewFromLeft = rows.map(String::viewFromEachTreeLeft)
-    val viewFromRight = rows.map { it.reversed() }.map(String::viewFromEachTreeLeft)
-    val viewDown = columns.map(String::viewFromEachTreeLeft)
-    val viewUp = columns.map { it.reversed() }.map(String::viewFromEachTreeLeft)
-    val size = rows.size
+    private val columns= rows.toColumns()
+    private val viewFromLeft = rows.map(String::viewFromEachTreeLeft)
+    private val viewFromRight = rows.map { it.reversed() }.map(String::viewFromEachTreeLeft)
+    private val viewDown = columns.map(String::viewFromEachTreeLeft)
+    private val viewUp = columns.map { it.reversed() }.map(String::viewFromEachTreeLeft)
+    private val size = rows.size
 
     fun viewFrom(row:Int, col:Int ):Int =
          viewFromLeft[row][col] * viewFromRight[row][size - col - 1] * viewDown[col][row] * viewUp[col][size - row -1 ]
