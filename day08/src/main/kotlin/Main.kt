@@ -17,9 +17,7 @@ data class HeightMap(val rows:List<String>, val size:Int = rows.size) {
     val highestFromBottom = columns.map{it.reversed().highestOnLine()}
 }
 
-fun String.highestOnLine() = fold(listOf<Char>()) {
-        total, char -> if (total.isEmpty() || char > total.last()) total + char else total + total.last()
-}
+fun String.highestOnLine() = fold(listOf<Char>()) { total, char -> if (total.isEmpty() || char > total.last()) total + char else total + total.last() }
 
 fun isVisible(treeSize: Char, row: Int, col: Int, hm: HeightMap) =
     isHighest(treeSize, hm.highestFromLeft[row], col)
