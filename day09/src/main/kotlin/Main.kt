@@ -1,5 +1,3 @@
-import javafx.geometry.Pos
-
 fun helloWorld() = "hello world"
 
 enum class Direction (val offset:Position) {
@@ -35,17 +33,17 @@ data class Position(val x:Int, val y:Int) {
 
     infix operator fun plus(other:Position) = Position(x + other.x, y + other.y)
 
-    fun directionOfHead(head: Position):Direction = when(true) {
-        (y == head.y && x <  head.x) -> Direction.Right
-        (y == head.y && x >  head.x) -> Direction.Left
-        (y >  head.y && x == head.x) -> Direction.Up
-        (y <  head.y && x == head.x) -> Direction.Down
-        (y >  head.y && x <  head.x)  -> Direction.UpRight
-        (y >  head.y && x >  head.x)  -> Direction.UpLeft
-        (y <  head.y && x <  head.x)  -> Direction.DownRight
-        (y <  head.y && x >  head.x)  -> Direction.DownLeft
-        else -> Direction.None
-    }
+    fun directionOfHead(head: Position):Direction  = over(head) ?: horizontal(head) ?: vertical(head) ?: downDiaganol(head) ?: upDiaganol(head)
+
+    fun over(head:Position) = if (this == head) Direction.None else null
+
+    fun horizontal(head:Position) = if (y == head.y) if (x < head.x) Direction.Right else Direction.Left else null
+
+    fun vertical(head:Position) = if (x == head.x) if (y < head.y) Direction.Down else Direction.Up else null
+
+    fun downDiaganol(head:Position) = if (y < head.y)  if (x < head.x) Direction.DownRight else Direction.DownLeft else null
+
+    fun upDiaganol(head:Position) = if (x < head.x) Direction.UpRight else Direction.UpLeft
 
     fun moveTowards(head:Position) = if (isTouching(head)) this else this + directionOfHead(head).offset
 
@@ -62,31 +60,22 @@ fun List<Position>.moveTowards(head:Position) =
     mapIndexed { index, tail -> if (index == 0) tail.moveTowards(head) else tail.moveTowards(get(index - 1))}
 
 
-fun List<Instruction>.processAll(start:Position, tailSize:Int, auditTrail:MutableSet<Position>):Pair<Position,List<Position>> {
-    val headAndTail = Pair(start, (1..tailSize).map{start})
-    auditTrail.add(start)
-    return fold(headAndTail){result, instruction ->
+fun List<Instruction>.processAll(start:Position, tails:List<Position>, auditTrail:MutableSet<Position>):Pair<Position,List<Position>> =
+    fold(Pair(start, tails)){result, instruction ->
         val (head, tail) = result
         head.moveHead(instruction, tail, auditTrail)
     }
-}
 
-fun partOne(data: List<String>):Set<Position> {
-    val start = Position(0,4)
+
+fun partOne(data: List<String>, tailSize:Int = 1):Set<Position> {
+    val head = Position(0,4)
+    val tails = (1..tailSize).map{head}
     val instructions = data.parse()
-    val audit = mutableSetOf(start)
-    val (_, _) = instructions.processAll(start,1, audit)
+    val audit = mutableSetOf<Position>()
+    val (_, _) = instructions.processAll(head, tails,audit)
     return audit
 }
 
-fun partTwo(data: List<String>):Set<Position> {
-    val start = Position(0,4)
-    val instructions = data.parse()
-    val audit = mutableSetOf(start)
-    val (_, _) = instructions.processAll(start,9, audit)
-    return audit
-}
-
-
+fun partTwo(data: List<String>):Set<Position> = partOne(data, tailSize = 9)
 
 val Int.abs get() = if (this < 0) -this else this

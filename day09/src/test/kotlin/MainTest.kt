@@ -59,9 +59,10 @@ class MainTest: WordSpec( {
         }
         "following all instructions causes tail to visit 13 places" {
             val start = Position(0,4)
+            val tails = (1..1).map{start}
             val instructions = sampleInput.parse()
             val audit = mutableSetOf(start)
-            val (head, tail) = instructions.processAll(start, 1, audit)
+            val (head, tail) = instructions.processAll(start, tails, audit)
             head shouldBe Position(2,2)
             tail shouldBe listOf(Position(1,2))
             audit.size shouldBe 13
@@ -76,9 +77,10 @@ class MainTest: WordSpec( {
     "Part two" should ({
         "following all instructions causes tail to visit 1 place" {
             val start = Position(0,4)
+            val startTails = (1..9).map{start}
             val instructions = sampleInput.parse()
             val audit = mutableSetOf(start)
-            val (head, tails) = instructions.processAll(start, 9, audit)
+            val (head, tails) = instructions.processAll(start, startTails, audit)
             head shouldBe Position(2,2)
             tails[0] shouldBe Position(1,2)
             tails[1] shouldBe Position(2,2)
