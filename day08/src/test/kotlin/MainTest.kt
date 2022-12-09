@@ -18,47 +18,47 @@ class MainTest: WordSpec( {
         }
         "[0][1] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('0',0,1,treeMap ) shouldBe true
+            treeMap.isVisible('0',0,1 ) shouldBe true
         }
         "[2][0] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('6',2,0,treeMap ) shouldBe true
+            treeMap.isVisible('6',2,0 ) shouldBe true
         }
         "[1][1] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('5',1,1,treeMap ) shouldBe true
+            treeMap.isVisible('5',1,1 ) shouldBe true
         }
        "[1][2] in sample data is visible" {
            val treeMap = HeightMap(sampleInput)
-            isVisible('5',1,2,treeMap ) shouldBe true
+           treeMap.isVisible('5',1,2 ) shouldBe true
         }
         "[1][3] in sample data is not visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('1',1,3,treeMap ) shouldBe false
+            treeMap.isVisible('1',1,3 ) shouldBe false
         }
         "[2][1] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('5',2,1,treeMap ) shouldBe true
+            treeMap.isVisible('5',2,1 ) shouldBe true
         }
         "[2][2] in sample data is not visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('3',2,2,treeMap ) shouldBe false
+            treeMap.isVisible('3',2,2 ) shouldBe false
         }
         "[2][3] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('3',2,3,treeMap ) shouldBe true
+            treeMap.isVisible('3',2,3 ) shouldBe true
         }
         "[3][2] in sample data is visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('5',3,2,treeMap ) shouldBe true
+            treeMap.isVisible('5',3,2 ) shouldBe true
         }
         "[3][1] in sample data is not visible" {
             val treeMap = HeightMap(sampleInput)
-            isVisible('3',3,1,treeMap ) shouldBe false
+            treeMap.isVisible('3',3,1 ) shouldBe false
         }
        "[3][3] in sample data is not visible" {
            val treeMap = HeightMap(sampleInput)
-            isVisible('4',3,3,treeMap ) shouldBe false
+           treeMap.isVisible('4',3,3 ) shouldBe false
         }
         "part one with sample data is 21" {
             partOne(sampleInput) shouldBe 21

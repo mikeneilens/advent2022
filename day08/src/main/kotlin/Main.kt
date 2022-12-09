@@ -15,15 +15,15 @@ data class HeightMap(val rows:List<String>, val size:Int = rows.size) {
     val highestFromRight = rows.map { it.reversed().highestOnLine() }
     val highestFromTop = columns.map{it.highestOnLine()}
     val highestFromBottom = columns.map{it.reversed().highestOnLine()}
+
+    fun isVisible(treeSize: Char, row: Int, col: Int) =
+        isHighest(treeSize, highestFromLeft[row], col)
+                || isHighest(treeSize, highestFromRight[row], size - col - 1)
+                || isHighest(treeSize, highestFromTop[col], row)
+                || isHighest(treeSize, highestFromBottom[col], size - row - 1)
 }
 
 fun String.highestOnLine() = fold(listOf<Char>()) { total, char -> if (total.isEmpty() || char > total.last()) total + char else total + total.last() }
-
-fun isVisible(treeSize: Char, row: Int, col: Int, hm: HeightMap) =
-    isHighest(treeSize, hm.highestFromLeft[row], col)
-            || isHighest(treeSize, hm.highestFromRight[row], hm.size - col - 1)
-            || isHighest(treeSize, hm.highestFromTop[col], row)
-            || isHighest(treeSize, hm.highestFromBottom[col], hm.size - row - 1)
 
 fun isHighest(treeSize: Char, row:List<Char>, col:Int) = ( treeSize == row[col] && (col == 0 || treeSize != row[col - 1]  )   )
 
@@ -31,7 +31,7 @@ fun partOne(rows: List<String>):Int {
     val heightMap = HeightMap(rows)
     return (rows.indices).sumOf { row ->
         (rows.indices).count { col ->
-            isVisible(rows[row][col], row, col, heightMap)
+            heightMap.isVisible(rows[row][col], row, col)
         }
     }
 }
