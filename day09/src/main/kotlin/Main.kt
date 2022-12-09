@@ -1,27 +1,19 @@
-fun helloWorld() = "hello world"
-
-enum class Direction (val offset:Position) {
-    Right(Position(1,0)),
-    Left(Position(-1,0)),
-    Up(Position(0,-1)),
-    Down(Position(0,1)),
-    UpRight(Position(1,-1)),
-    UpLeft(Position(-1,-1)),
-    DownRight(Position(1,1)),
-    DownLeft(Position(-1,1)),
-    None(Position(0,0))
+enum class Direction (val offset:Position, val isDirection:(Position, Position)->Boolean) {
+    Right(offset = Position(1,0), isDirection = {t, h -> (t.y == h.y && t.x < h.x)}),
+    Left(offset = Position(-1,0), isDirection = {t, h -> (t.y == h.y && t.x > h.x)}),
+    Up(offset = Position(0,-1), isDirection = {t, h -> (t.x == h.x && t.y > h.y)}),
+    Down(offset = Position(0,1),isDirection = {t, h -> (t.x == h.x && t.y < h.y)}),
+    UpRight(offset = Position(1,-1), isDirection = {t, h -> (t.y > h.y && t.x < h.x)}),
+    UpLeft(offset = Position(-1,-1), isDirection = {t, h -> (t.y > h.y && t.x > h.x)}),
+    DownRight(offset = Position(1,1), isDirection = {t, h -> (t.y < h.y && t.x < h.x)}),
+    DownLeft(offset = Position(-1,1), isDirection = {t, h -> (t.y < h.y && t.x > h.x)}),
+    None(offset = Position(0,0), isDirection = {t, h -> t == h})
 }
 
 data class Instruction(val direction:Direction, val qty:Int)
 
 fun String.toInstruction():Instruction {
-    val direction = when (split(" ")[0]) {
-        "L" -> Direction.Left
-        "R" -> Direction.Right
-        "U" -> Direction.Up
-        "D" -> Direction.Down
-        else -> Direction.None
-    }
+    val direction = Direction.values().first{it.name.startsWith(split(" ")[0])}
     val qty = split(" ")[1].toInt()
     return Instruction(direction,qty)
 }
@@ -33,17 +25,7 @@ data class Position(val x:Int, val y:Int) {
 
     infix operator fun plus(other:Position) = Position(x + other.x, y + other.y)
 
-    fun directionOfHead(head: Position):Direction  = over(head) ?: horizontal(head) ?: vertical(head) ?: downDiaganol(head) ?: upDiaganol(head)
-
-    fun over(head:Position) = if (this == head) Direction.None else null
-
-    fun horizontal(head:Position) = if (y == head.y) if (x < head.x) Direction.Right else Direction.Left else null
-
-    fun vertical(head:Position) = if (x == head.x) if (y < head.y) Direction.Down else Direction.Up else null
-
-    fun downDiaganol(head:Position) = if (y < head.y)  if (x < head.x) Direction.DownRight else Direction.DownLeft else null
-
-    fun upDiaganol(head:Position) = if (x < head.x) Direction.UpRight else Direction.UpLeft
+    fun directionOfHead(head: Position) = Direction.values().first { it.isDirection(this, head)}
 
     fun moveTowards(head:Position) = if (isTouching(head)) this else this + directionOfHead(head).offset
 
