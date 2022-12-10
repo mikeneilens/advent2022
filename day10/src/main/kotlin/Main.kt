@@ -1,21 +1,20 @@
 sealed class ProgramStep {
     object NOOP:ProgramStep()
-    object AddX:ProgramStep(){val process = {x:Int, y:Int -> x + y}}
-    data class Number(val value:Int):ProgramStep() {val instruction = AddX}
+    object AddX:ProgramStep()
+    data class Number(val value:Int):ProgramStep() {
+        override fun calcDuringAndAfter(x: Int) =  ProgramResult(x, x + value )
+    }
+
+    open fun calcDuringAndAfter(x: Int): ProgramResult = ProgramResult(x,x)
 }
 
 data class Program(val programSteps:List<ProgramStep>) {
-    fun run() = programSteps.fold( listOf(ProgramResult(1,1)) ) { programResults, programStep ->
-            if (programStep is ProgramStep.Number)
-                programResults + calcDuringAndAfter(programStep, programResults.last().after)
-            else
-                programResults + ProgramResult(programResults.last().after, programResults.last().after)
-        }.drop(1)
-    }
+    fun run() = programSteps.fold( listOf(ProgramResult()) ) { programResults, programStep ->
+                     programResults + programStep.calcDuringAndAfter(programResults.last().after)
+    }.drop(1)
+}
 
-data class ProgramResult(val during:Int, val after:Int)
-
-fun calcDuringAndAfter(programStep:ProgramStep.Number, x:Int) = ProgramResult(x, programStep.instruction.process(x, programStep.value) )
+data class ProgramResult(val during:Int = 1, val after:Int = 1)
 
 fun List<ProgramResult>.signalStringDuring(cycle:Int) = get(cycle -1 ).during * cycle
 
