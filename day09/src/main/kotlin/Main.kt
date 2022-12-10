@@ -1,5 +1,6 @@
 enum class Direction (val offset:Position, val isDirectionWhen:(Position, Position)->Boolean) {
     None(offset = Position(0,0), isDirectionWhen = { t, h -> t == h}),
+    Touching(offset = Position(0,0), isDirectionWhen = { t, h -> ((t.x - h.x).abs) <= 1 && ((t.y - h.y).abs) <= 1 }),
     Right(offset = Position(1,0), isDirectionWhen = { t, h -> (t.y == h.y && t.x < h.x)}),
     Left(offset = Position(-1,0), isDirectionWhen = { t, h -> (t.y == h.y && t.x > h.x)}),
     Up(offset = Position(0,-1), isDirectionWhen = { t, h -> (t.x == h.x && t.y > h.y)}),
@@ -12,22 +13,21 @@ enum class Direction (val offset:Position, val isDirectionWhen:(Position, Positi
 
 data class Instruction(val direction:Direction, val qty:Int)
 
+fun List<String>.parse() = map(String::toInstruction)
+
 fun String.toInstruction():Instruction {
     val direction = Direction.values().first{it.name.startsWith(split(" ")[0])}
     val qty = split(" ")[1].toInt()
     return Instruction(direction,qty)
 }
 
-fun List<String>.parse() = map(String::toInstruction)
-
 data class Position(val x:Int, val y:Int) {
-    infix fun isTouching(other:Position):Boolean = (((x - other.x).abs) <= 1 && ((y - other.y).abs) <= 1 )
 
     infix operator fun plus(other:Position) = Position(x + other.x, y + other.y)
 
     private fun directionOfHead(head: Position) = Direction.values().first { it.isDirectionWhen(this, head)}
 
-    fun moveTowards(head:Position) = if (isTouching(head)) this else this + directionOfHead(head).offset
+    fun moveTowards(head:Position) =  this + directionOfHead(head).offset
 
     fun moveHead(instruction: Instruction, tails:List<Position>, auditTrail:MutableSet<Position>):Pair<Position, List<Position>> {
         if (instruction.qty == 0) return Pair(this, tails)

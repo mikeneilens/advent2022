@@ -14,10 +14,10 @@ class MainTest: WordSpec( {
     """.trimIndent().split("\n")
     "Part one" should ({
         "Position[0,0] isTouching Position[-1,-1]" {
-            Position(0,0) isTouching Position(-1,-1) shouldBe true
+            Direction.Touching.isDirectionWhen(Position(-1,-1),Position(0,0)) shouldBe true
         }
         "Position[0,0] is not Touching Position[-1,-2]" {
-            Position(0,0) isTouching Position(-1,-2) shouldBe false
+            Direction.Touching.isDirectionWhen(Position(0,0),Position(-1,-2)) shouldBe false
         }
         "Direction to move should be Right when tail is [1,1] and head is [3,1]" {
             val tail_1_1 = Position(1,1)
