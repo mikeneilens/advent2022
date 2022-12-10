@@ -39,11 +39,6 @@ class MainTest: WordSpec( {
             val head_1_3 = Position(1,3)
             Direction.Down.isDirectionFor(tail_1_1, head_1_3 ) shouldBe true
         }
-        "Direction to move should be None when tail is [3,3] and head is [3,3]" {
-            val tail_3_3 = Position(3,3)
-            val head_3_3 = Position(3,3)
-            Direction.None.isDirectionFor(tail_3_3, head_3_3 ) shouldBe true
-        }
         "Direction to move should be DownRight when tail is [1,1] and head is [3,2]" {
             val tail_1_1 = Position(1,1)
             val head_3_2 = Position(3,2)

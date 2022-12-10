@@ -1,8 +1,7 @@
-import java.lang.Math.abs
+import kotlin.math.*
 
 enum class Direction (val offset:Position, val isDirectionFor:(Position, Position)->Boolean) {
-    None(offset = Position(0,0), isDirectionFor = { t, h -> t == h}),
-    Touching(offset = Position(0,0), isDirectionFor = { t, h -> ( abs(t.x - h.x)) <= 1 && (abs(t.y - h.y)) <= 1 }),
+    Touching(offset = Position(0,0), isDirectionFor = { t, h -> (abs(t.x - h.x)) <= 1 && (abs(t.y - h.y)) <= 1 }),
     Right(offset = Position(1,0), isDirectionFor = { t, h -> (t.y == h.y && t.x < h.x)}),
     Left(offset = Position(-1,0), isDirectionFor = { t, h -> (t.y == h.y && t.x > h.x)}),
     Up(offset = Position(0,-1), isDirectionFor = { t, h -> (t.x == h.x && t.y > h.y)}),
@@ -26,10 +25,11 @@ data class Position(val x:Int, val y:Int) {
     infix operator fun plus(other:Position) = Position(x + other.x, y + other.y)
 }
 
-data class Knot(var position:Position, var nextKnot:Knot? = null) {
+data class Knot(var position:Position, val nextKnot:Knot? = null) {
+    fun attachKnots(qty: Int):Knot = if (qty == 0) this else Knot(Position(0, 0), this).attachKnots(qty - 1)
 
     fun move(direction:Direction, audit:MutableSet<Position>) {
-        position = position + direction.offset
+        position += direction.offset
         nextKnot?.let { nextKnot ->
             val nextDirection = Direction.values().first { direction -> direction.isDirectionFor(nextKnot.position, position)}
             nextKnot.move(nextDirection, audit)
@@ -40,7 +40,7 @@ data class Knot(var position:Position, var nextKnot:Knot? = null) {
 fun List<Instruction>.process(knot:Knot, audit:MutableSet<Position>) =
     forEach {(direction, qty) -> repeat(qty){ knot.move(direction, audit) }}
 
-fun partOne(data:List<String>, knot:Knot = Knot(Position(0,0), Knot(Position(0,0),null)) ):Set<Position> {
+fun partOne(data:List<String>, knot:Knot = Knot(Position(0,0)).attachKnots(1) ):Set<Position> {
     val instructions = data.parseToInstructions()
     val audit = mutableSetOf<Position>()
     instructions.process(knot,audit)
@@ -48,7 +48,6 @@ fun partOne(data:List<String>, knot:Knot = Knot(Position(0,0), Knot(Position(0,0
 }
 
 fun partTwo(data:List<String>):Set<Position> {
-    val knots = (0..9).map{Knot(Position(0,0))}
-    knots.windowed(2,1).forEach { (a, b) -> a.nextKnot = b }
-    return partOne(data, knots.first())
+    val knot = Knot(Position(0, 0)).attachKnots(qty = 9)
+    return partOne(data, knot)
 }
