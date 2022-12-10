@@ -24,27 +24,27 @@ class MainTest: WordSpec( {
         "running program with large sample gives signal strength of 420 at cycle 20" {
             val program = largeSample.parseToProgram()
             val result = program.run()
-            result.signalStringDuring(cycle = 20) shouldBe 420
+            result.signalStrengthDuring(cycle = 20) shouldBe 420
         }
         "running program with large sample gives signal strength of 1140 at cycle 60" {
             val program = largeSample.parseToProgram()
             val result = program.run()
-            result.signalStringDuring(cycle = 60) shouldBe 1140
+            result.signalStrengthDuring(cycle = 60) shouldBe 1140
         }
         "running program with large sample gives signal strength of 1800 at cycle 100" {
             val program = largeSample.parseToProgram()
             val result = program.run()
-            result.signalStringDuring(cycle = 100) shouldBe 1800
+            result.signalStrengthDuring(cycle = 100) shouldBe 1800
         }
         "running program with large sample gives signal strength of 2880 at cycle 180" {
             val program = largeSample.parseToProgram()
             val result = program.run()
-            result.signalStringDuring(cycle = 180) shouldBe 2880
+            result.signalStrengthDuring(cycle = 180) shouldBe 2880
         }
         "running program with large sample gives signal strength of 3960 at cycle 220" {
             val program = largeSample.parseToProgram()
             val result = program.run()
-            result.signalStringDuring(cycle = 220) shouldBe 3960
+            result.signalStrengthDuring(cycle = 220) shouldBe 3960
         }
         "part one with large sample gives total signal strength of 13140" {
             partOne(largeSample) shouldBe 13140

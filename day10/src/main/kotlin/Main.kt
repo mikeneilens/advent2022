@@ -16,7 +16,7 @@ data class Program(val programSteps:List<ProgramStep>) {
 
 data class ProgramResult(val during:Int = 1, val after:Int = 1)
 
-fun List<ProgramResult>.signalStringDuring(cycle:Int) = get(cycle -1 ).during * cycle
+fun List<ProgramResult>.signalStrengthDuring(cycle:Int) = get(cycle -1 ).during * cycle
 
 fun List<String>.parseToProgram() = Program(flatMap(String::toListOfProgramSteps))
 
@@ -27,7 +27,7 @@ fun String.toProgramStep() = if (this == "noop") ProgramStep.NOOP else if (this 
 fun partOne(data:List<String>): Int {
     val program = data.parseToProgram()
     val output = program.run()
-    return (20..220).step(40).sumOf { output.signalStringDuring(it) }
+    return (20..220).step(40).sumOf { output.signalStrengthDuring(it) }
 }
 
 //part two
