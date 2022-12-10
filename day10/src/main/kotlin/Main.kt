@@ -5,11 +5,11 @@ sealed class ProgramStep {
 }
 
 data class Program(val programSteps:List<ProgramStep>) {
-    fun run() = programSteps.fold(listOf(ProgramResult(1,1))) { programResult, programStep ->
+    fun run() = programSteps.fold( listOf(ProgramResult(1,1)) ) { programResults, programStep ->
             if (programStep is ProgramStep.Number)
-                programResult + calcDuringAndAfter(programStep, programResult.last().after)
+                programResults + calcDuringAndAfter(programStep, programResults.last().after)
             else
-                programResult + ProgramResult(programResult.last().after, programResult.last().after)
+                programResults + ProgramResult(programResults.last().after, programResults.last().after)
         }.drop(1)
     }
 
@@ -34,17 +34,15 @@ fun partOne(data:List<String>): Int {
     return (20..220).step(40).sumOf { output.signalStringDuring(it) }
 }
 
-fun createImage(result:List<ProgramResult>):List<String> {
-    val results:List<List<ProgramResult>> = result.chunked(40)
-    return results.map{crtLine(it)}
-}
+//part two
+fun createImage(programResults:List<ProgramResult>) = programResults.chunked(40).map{crtLine(it)}
 
-fun crtLine(result:List<ProgramResult>):String =
+fun crtLine(programResults:List<ProgramResult>):String =
     (0..39).map{ pixelPosition ->
-        if (resultOverlapsPixel(result, pixelPosition)) '#'
+        if (resultOverlapsPixel(programResults, pixelPosition)) '#'
         else '.'  }.joinToString("")
 
-private fun resultOverlapsPixel(result: List<ProgramResult>, pixelPosition: Int) = pixelPosition in result.pixels(pixelPosition)
+private fun resultOverlapsPixel(programResults: List<ProgramResult>, pixelPosition: Int) = pixelPosition in programResults.pixels(pixelPosition)
 
 fun List<ProgramResult>.pixels(pixelPosition: Int) = listOf(get(pixelPosition).during,get(pixelPosition).during - 1, get(pixelPosition).during + 1 )
 
