@@ -37,17 +37,13 @@ data class Knot(var position:Position, var nextKnot:Knot? = null) {
     }
 }
 
-fun process(knot:Knot, direction:Direction, qty:Int, audit:MutableSet<Position>) {
-    if (qty > 0)  {
-        knot.move(direction, audit)
-        process(knot, direction,qty -1, audit)
-    }
-}
+fun List<Instruction>.process(knot:Knot, audit:MutableSet<Position>) =
+    forEach {(direction, qty) -> repeat(qty){ knot.move(direction, audit) }}
 
 fun partOne(data:List<String>, knot:Knot = Knot(Position(0,0), Knot(Position(0,0),null)) ):Set<Position> {
     val instructions = data.parseToInstructions()
     val audit = mutableSetOf<Position>()
-    instructions.forEach { process(knot, it.direction, it.qty, audit)}
+    instructions.process(knot,audit)
     return audit
 }
 
