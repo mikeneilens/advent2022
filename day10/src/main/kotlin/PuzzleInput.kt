@@ -143,5 +143,4 @@ noop
 noop
 addx -10
 noop
-noop    
-""".trimIndent().split("\n")
+noop""".trimIndent().split("\n")
