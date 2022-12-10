@@ -26,14 +26,14 @@ data class Position(val x:Int, val y:Int) {
     infix operator fun plus(other:Position) = Position(x + other.x, y + other.y)
 }
 
-data class Knot(var pos:Position, var next:Knot? = null) {
+data class Knot(var position:Position, var nextKnot:Knot? = null) {
 
     fun move(direction:Direction, audit:MutableSet<Position>) {
-        pos = pos + direction.offset
-        next?.let { next ->
-            val nextDirection = Direction.values().first { direction -> direction.isDirectionFor(next.pos, pos)}
-            next.move(nextDirection, audit)
-        } ?: audit.add(pos)
+        position = position + direction.offset
+        nextKnot?.let { nextKnot ->
+            val nextDirection = Direction.values().first { direction -> direction.isDirectionFor(nextKnot.position, position)}
+            nextKnot.move(nextDirection, audit)
+        } ?: audit.add(position)
     }
 }
 
@@ -53,6 +53,6 @@ fun partOne(data:List<String>, knot:Knot = Knot(Position(0,0), Knot(Position(0,0
 
 fun partTwo(data:List<String>):Set<Position> {
     val knots = (0..9).map{Knot(Position(0,0))}
-    knots.windowed(2,1).forEach { (a, b) -> a.next = b }
+    knots.windowed(2,1).forEach { (a, b) -> a.nextKnot = b }
     return partOne(data, knots.first())
 }
