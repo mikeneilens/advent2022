@@ -19,7 +19,7 @@ class MainTest: WordSpec( {
         }
         "running program from sample input gves x values of  1,1,4,4,-1 " {
             val program = sampleInput.parseToProgram()
-            program.run() shouldBe listOf(Pair(1, 1), Pair(1, 1), Pair(1, 4), Pair(4, 4), Pair(4, -1))
+            program.run() shouldBe listOf(ProgramResult(1, 1), ProgramResult(1, 1), ProgramResult(1, 4), ProgramResult(4, 4), ProgramResult(4, -1))
         }
         "running program with large sample gives signal strength of 420 at cycle 20" {
             val program = largeSample.parseToProgram()

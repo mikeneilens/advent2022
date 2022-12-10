@@ -5,52 +5,48 @@ sealed class ProgramStep {
 }
 
 data class Program(val programSteps:List<ProgramStep>) {
-    fun run():List<Pair<Int, Int>> {
-        var x = 1
-        return programSteps.map{programStep -> if (programStep is ProgramStep.Number) {
-            val duringAndAfter = calcDuringAndAfter(programStep, x)
-            x = duringAndAfter.second
-            duringAndAfter
-        } else Pair(x,x) }
+    fun run() = programSteps.fold(listOf(ProgramResult(1,1))) { programResult, programStep ->
+            if (programStep is ProgramStep.Number)
+                programResult + calcDuringAndAfter(programStep, programResult.last().after)
+            else
+                programResult + ProgramResult(programResult.last().after, programResult.last().after)
+        }.drop(1)
     }
-}
 
-fun calcDuringAndAfter(programStep:ProgramStep.Number, x:Int):Pair<Int, Int> = Pair(x, programStep.instruction.process(x, programStep.value) )
+data class ProgramResult(val during:Int, val after:Int)
 
-fun List<Pair<Int,Int>>.signalStringDuring(cycle:Int) = get(cycle -1 ).first * cycle
+fun calcDuringAndAfter(programStep:ProgramStep.Number, x:Int) = ProgramResult(x, programStep.instruction.process(x, programStep.value) )
+
+fun List<ProgramResult>.signalStringDuring(cycle:Int) = get(cycle -1 ).during * cycle
 
 fun List<String>.parseToProgram():Program {
-    val programSteps  = mutableListOf<ProgramStep>()
-    forEach { line ->
-        when (line.split(" ")[0]) {
-            "addx" -> {
-                programSteps.add(ProgramStep.AddX )
-                programSteps.add(ProgramStep.Number(line.split(" ")[1].toInt()))
-            }
-            else -> programSteps.add(ProgramStep.NOOP)
-        }
-    }
+    val programSteps  = flatMap { line ->
+        if (line.split(" ")[0] == "addx") line.asAddxProgramSteps() else  listOf(ProgramStep.NOOP)
+     }
     return Program(programSteps)
 }
+
+fun String.asAddxProgramSteps() = listOf(ProgramStep.AddX ,ProgramStep.Number(split(" ")[1].toInt()))
 
 fun partOne(data:List<String>): Int {
     val program = data.parseToProgram()
     val output = program.run()
-    return output.signalStringDuring(20) + output.signalStringDuring(60) +
-            output.signalStringDuring(100) + output.signalStringDuring(140) +
-            output.signalStringDuring(180) + output.signalStringDuring(220)
+    return (20..220).step(40).sumOf { output.signalStringDuring(it) }
 }
 
-fun createImage(result:List<Pair<Int, Int>>):List<String> {
-    val results:List<List<Pair<Int, Int>>> = result.chunked(40)
+fun createImage(result:List<ProgramResult>):List<String> {
+    val results:List<List<ProgramResult>> = result.chunked(40)
     return results.map{crtLine(it)}
 }
 
-fun crtLine(result:List<Pair<Int, Int>>):String =
+fun crtLine(result:List<ProgramResult>):String =
     (0..39).map{ pixelPosition ->
-        if (result[pixelPosition].first == pixelPosition || result[pixelPosition].first - 1 == pixelPosition || result[pixelPosition].first + 1 == pixelPosition      )
-            '#'
+        if (resultOverlapsPixel(result, pixelPosition)) '#'
         else '.'  }.joinToString("")
+
+private fun resultOverlapsPixel(result: List<ProgramResult>, pixelPosition: Int) = pixelPosition in result.pixels(pixelPosition)
+
+fun List<ProgramResult>.pixels(pixelPosition: Int) = listOf(get(pixelPosition).during,get(pixelPosition).during - 1, get(pixelPosition).during + 1 )
 
 fun partTwo(data: List<String>):List<String> {
     val results = data.parseToProgram().run()
