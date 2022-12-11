@@ -1,67 +1,73 @@
+typealias Worry = Long
+typealias WorryUpdater = (Worry) -> Worry
+typealias WorryReducer = (Worry) -> Worry
+typealias MonkeyData = List<String>
+
 data class Monkey(
-    val monkeyNumber:Int,
-    val items:MutableList<Long>,
-    val operation:(Long)->Long,
-    val monkeyToThrowTo:(Long)->Int,
-    var worryReducer:(Long)->Long = { n -> n /3},
-    var noOfOperations:Int = 0)
+    val monkeyNumber: Int,
+    val items: MutableList<Long>,
+    val worryUpdater: WorryUpdater,
+    val monkeyToThrowTo: (Long)->Int,
+    var worryReducer: WorryReducer,
+    var noOfOperations: Long = 0L )
 
-fun List<String>.toMonkey(worryReducer: (Long)->Long)
-= Monkey(monkeyNumber(),startingItems(), operation(worryReducer), monkeyToThrowTo(testDivisible()),worryReducer)
+fun List<MonkeyData>.toMonkeys(worryReducer: WorryReducer) = map{it.toMonkey(worryReducer)}
 
-fun List<String>.monkeyNumber() = first().removePrefix("Monkey ").removeSuffix(":").toInt()
+fun MonkeyData.toMonkey(worryReducer: WorryReducer)
+   = Monkey(monkeyNumber(),startingItems(), worryUpdater(worryReducer), monkeyToThrowTo(testDivisible()), worryReducer)
 
-fun List<String>.startingItems() = get(1).removePrefix("  Starting items: ").split(", ").map(String::toLong).toMutableList()
+fun MonkeyData.monkeyNumber() = first().removePrefix("Monkey ").removeSuffix(":").toInt()
 
-fun List<String>.operation(worryReducer: (Long)->Long): (Long)-> Long {
+fun MonkeyData.startingItems() = get(1).removePrefix("  Starting items: ").split(", ").map(String::toLong).toMutableList()
+
+fun MonkeyData.worryUpdater(worryReducer: WorryReducer): WorryUpdater {
     val (symbol, param2) = get(2).removePrefix("  Operation: new = ").split(" ").drop(1)
-    return operation(symbol, param2, worryReducer)
-}
-fun operation(symbol:String, param2:String, worryReducer: (Long)->Long): (Long)->Long {
-    return if (symbol == "+") {old:Long -> worryReducer(old + param2.toLong()) }
-    else if (symbol == "*" && param2 == "old") {old:Long -> worryReducer( old * old) }
-    else  {old:Long -> worryReducer(old * param2.toInt()) }
+    return worryUpdater(symbol, param2, worryReducer)
 }
 
-fun List<String>.testDivisibleBy(): Long = get(3).removePrefix("  Test: divisible by ").toLong()
+fun worryUpdater(symbol:String, param2:String, worryReducer:WorryReducer): WorryUpdater =
+    if (symbol == "+") {old -> worryReducer(old + param2.toLong()) }
+    else if (symbol == "*" && param2 == "old") {old -> worryReducer( old * old) }
+    else  {old -> worryReducer(old * param2.toLong()) }
 
-fun List<String>.testDivisible(): (Long, Int, Int)-> Int {
-    return {n:Long, trueMonkey:Int, falseMonkey:Int -> if ((n % testDivisibleBy()) == 0L) trueMonkey else falseMonkey}
-}
+fun MonkeyData.divisibleNo() = get(3).removePrefix("  Test: divisible by ").toLong()
 
-fun List<String>.monkeyToThrowTo(divisibleRule:(Long, Int, Int)-> Int): (Long) -> Int {
+fun MonkeyData.testDivisible() =
+    {worry:Worry, trueMonkey:Int, falseMonkey:Int -> if ((worry % divisibleNo()) == 0L) trueMonkey else falseMonkey}
+
+fun MonkeyData.monkeyToThrowTo(divisibleRule: (Worry, Int, Int)-> Int): (Worry) -> Int {
     val trueMonkey = get(4).removePrefix("    If true: throw to monkey ").toInt()
     val falseMonkey = get(5).removePrefix("    If false: throw to monkey ").toInt()
-    return { n:Long -> divisibleRule(n, trueMonkey, falseMonkey)}
+    return { worry:Worry -> divisibleRule(worry, trueMonkey, falseMonkey)}
 }
 
-fun List<List<String>>.toMonkeys(worryReducer: (Long)->Long) = map{it.toMonkey(worryReducer)}
-
+//partOne
 fun List<Monkey>.processRound() = forEach{monkey -> processAll(monkey)}
 
 fun List<Monkey>.processAll(monkey: Monkey) {
-    monkey.items.indices.forEach { itemNdx -> process(monkey, itemNdx) }
+    monkey.items.forEach { item-> process(monkey, item) }
     monkey.items.removeAll{true}
 }
 
-fun List<Monkey>.process(monkey:Monkey, itemNdx:Int) {
-    val item = monkey.items[itemNdx]
-    val worryLevel = monkey.operation(item)
-    val monkeyToThrowTo = monkey.monkeyToThrowTo( worryLevel)
-    get(monkeyToThrowTo).items.add(worryLevel)
+fun List<Monkey>.process(monkey:Monkey, item:Worry) {
+    val worryLevel = monkey.worryUpdater(item)
+    val indexOfMonkeyToThrowTo = monkey.monkeyToThrowTo(worryLevel)
+    get(indexOfMonkeyToThrowTo).items.add(worryLevel)
     monkey.noOfOperations += 1
 }
 
-fun partOne(data: List<List<String>>, worryReducer: (Long) -> Long = { n -> n / 3}, repeats:Int = 20 ):Long {
+fun partOne(data: List<MonkeyData>, worryReducer: WorryReducer = { worry -> worry / 3}, repeats:Int = 20 ):Long {
     val monkeys = data.toMonkeys(worryReducer)
     repeat(repeats){monkeys.processRound()}
-    val (m1, m2) = monkeys.sortedBy { it.noOfOperations }.takeLast(2)
-    return m1.noOfOperations.toLong() * m2.noOfOperations.toLong()
+    val (busiestMonkey, secondBusiestMonkey) = monkeys.sortedBy { it.noOfOperations }.takeLast(2)
+    return busiestMonkey.noOfOperations * secondBusiestMonkey.noOfOperations
 }
 
-fun partTwo(data: List<List<String>>):Long {
-    val lowestCommonMultiplier = data.map{it.testDivisibleBy()}.toLowestCommonMultiplier()
-    return partOne(data, {n -> n % lowestCommonMultiplier}, 10000 )
+//part two
+fun partTwo(data: List<MonkeyData>):Long {
+    val lowestCommonMultiplier = data.map(List<String>::divisibleNo).toLowestCommonMultiplier()
+    val worryReducer:WorryReducer =  {worry -> worry % lowestCommonMultiplier}
+    return partOne(data, worryReducer, 10000 )
 }
 
 fun List<Long>.toLowestCommonMultiplier() = reduce { lcm, n -> lcm * n }
