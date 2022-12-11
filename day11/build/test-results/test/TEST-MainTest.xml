@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T20:51:29" hostname="MacBook-Pro-2" time="0.025">
+<testsuite name="MainTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2022-12-11T13:29:01" hostname="MacBook-Pro-2" time="0.217">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.019"/>
-  <testcase name="test" classname="MainTest" time="0.0"/>
+  <testcase name="Monkey number of first monkey" classname="MainTest" time="0.018"/>
+  <testcase name="Starting items of first monkey is 79, 98" classname="MainTest" time="0.002"/>
+  <testcase name="operation for old * 19 /3" classname="MainTest" time="0.002"/>
+  <testcase name="operation for old * old /3" classname="MainTest" time="0.001"/>
+  <testcase name="operation for (old + 19) /3" classname="MainTest" time="0.001"/>
+  <testcase name="operation of first monkey is old * 19 /3" classname="MainTest" time="0.001"/>
+  <testcase name="test divisible of first monkey is 23" classname="MainTest" time="0.001"/>
+  <testcase name="throw to monkey 2 if true and monkey 3 if false" classname="MainTest" time="0.001"/>
+  <testcase name="sample input toMonkeys creates a list of 4 monkeys" classname="MainTest" time="0.002"/>
+  <testcase name="process first monkey in the Sample Input" classname="MainTest" time="0.001"/>
+  <testcase name="processing all monkies for one round in the Sample Input" classname="MainTest" time="0.001"/>
+  <testcase name="part one with sample input is 10605" classname="MainTest" time="0.005"/>
+  <testcase name="part one with puzzle input is 98280" classname="MainTest" time="0.006"/>
+  <testcase name="processing all monkies for one round in the Sample Input" classname="MainTest" time="0.001"/>
+  <testcase name="processing all monkies for 20 rounds in the Sample Input" classname="MainTest" time="0.001"/>
+  <testcase name="processing all monkies for 1000 rounds in the Sample Input" classname="MainTest" time="0.012"/>
+  <testcase name="part two with sample input is 2713310158" classname="MainTest" time="0.04"/>
+  <testcase name="part two with puzzle input is 2713310158" classname="MainTest" time="0.078"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
