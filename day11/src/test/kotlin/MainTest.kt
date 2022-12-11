@@ -38,21 +38,21 @@ Monkey 3:
         "Starting items of first monkey is 79, 98" {
             sampleInput[0].startingItems() shouldBe listOf(79,98)
         }
-        "operation for old * 19 /3" {
-            val operation = worryUpdater("*", "19", { n -> n /3})
-            operation(2) shouldBe 12
+        "worry updater for old * 19 /3" {
+            val worryUpdater = worryUpdater("*", "19") { n -> n / 3 }
+            worryUpdater(2) shouldBe 12
         }
-        "operation for old * old /3" {
-            val operation = worryUpdater("*", "old", { n -> n /3})
-            operation(5) shouldBe 8        }
-        "operation for (old + 19) /3" {
-            val operation = worryUpdater("+", "19", { n -> n /3})
-            operation(5) shouldBe 8
+        "worry updater for old * old /3" {
+            val worryUpdater = worryUpdater("*", "old") { n -> n / 3 }
+            worryUpdater(5) shouldBe 8        }
+        "worry updater for (old + 19) /3" {
+            val worryUpdater = worryUpdater("+", "19") { n -> n / 3 }
+            worryUpdater(5) shouldBe 8
         }
-        "operation of first monkey is old * 19 /3" {
-            sampleInput[0].worryUpdater({ n -> n /3})(2) shouldBe 12
+        "worry updater of first monkey is old * 19 /3" {
+            sampleInput[0].worryUpdater { n -> n / 3 }(2) shouldBe 12
         }
-        "test divisible of first monkey is 23" {
+        "test divisible of first monkey is 23 so select first monkey" {
             val trueMonkey = 1
             val falseMonkey = 2
             sampleInput[0].testDivisible()(46, trueMonkey, falseMonkey) shouldBe trueMonkey
@@ -64,20 +64,20 @@ Monkey 3:
             sampleInput[0].monkeyToThrowTo(divisibleRule)(47) shouldBe 3
         }
         "sample input toMonkeys creates a list of 4 monkeys" {
-            val monkeys = sampleInput.toMonkeys({n -> n /3})
+            val monkeys = sampleInput.toMonkeys { n -> n / 3 }
             monkeys.size shouldBe 4
             monkeys[0].monkeyNumber shouldBe 0
             monkeys[3].monkeyNumber shouldBe 3
         }
         "process first monkey in the Sample Input" {
-            val monkeys = sampleInput.toMonkeys({n -> n /3})
+            val monkeys = sampleInput.toMonkeys { n -> n / 3 }
             monkeys.processAll(monkeys[0])
             monkeys[0].items shouldBe listOf()
             monkeys[0].noOfOperations shouldBe 2
             monkeys[3].items shouldBe listOf(74, 500, 620)
         }
-        "processing all monkies for one round in the Sample Input" {
-            val monkeys = sampleInput.toMonkeys({n -> n /3})
+        "processing all monkeys for one round in the Sample Input" {
+            val monkeys = sampleInput.toMonkeys { n -> n / 3 }
             monkeys.processRound()
             monkeys[0].items shouldBe listOf(20, 23, 27, 26)
             monkeys[1].items shouldBe listOf(2080, 25, 167, 207, 401, 1046)
@@ -92,27 +92,27 @@ Monkey 3:
         }
     })
     "Part two" should ({
-        "processing all monkies for one round in the Sample Input" {
+        "processing all monkeys for one round in the Sample Input using lcm worry reducer" {
             val lowestCommonMultiplier = sampleInput.map{it.divisibleNo()}.toLowestCommonMultiplier()
-            val monkeys = sampleInput.toMonkeys({ n -> n % lowestCommonMultiplier  })
+            val monkeys = sampleInput.toMonkeys { n -> n % lowestCommonMultiplier }
             monkeys.processRound()
             monkeys[0].noOfOperations shouldBe 2
             monkeys[1].noOfOperations shouldBe 4
             monkeys[2].noOfOperations shouldBe 3
             monkeys[3].noOfOperations shouldBe 6
         }
-        "processing all monkies for 20 rounds in the Sample Input" {
+        "processing all monkeys for 20 rounds in the Sample Input" {
             val lowestCommonMultiplier = sampleInput.map{it.divisibleNo()}.toLowestCommonMultiplier()
-            val monkeys = sampleInput.toMonkeys({ n -> n % lowestCommonMultiplier  })
+            val monkeys = sampleInput.toMonkeys { n -> n % lowestCommonMultiplier }
             repeat(20){monkeys.processRound()}
             monkeys[0].noOfOperations shouldBe 99
             monkeys[1].noOfOperations shouldBe 97
             monkeys[2].noOfOperations shouldBe 8
             monkeys[3].noOfOperations shouldBe 103
         }
-        "processing all monkies for 1000 rounds in the Sample Input" {
+        "processing all monkeys for 1000 rounds in the Sample Input" {
             val lowestCommonMultiplier = sampleInput.map{it.divisibleNo()}.toLowestCommonMultiplier()
-            val monkeys = sampleInput.toMonkeys({ n -> n % lowestCommonMultiplier  })
+            val monkeys = sampleInput.toMonkeys { n -> n % lowestCommonMultiplier }
             repeat(1000){monkeys.processRound()}
             monkeys[0].noOfOperations shouldBe 5204
             monkeys[1].noOfOperations shouldBe 4792
