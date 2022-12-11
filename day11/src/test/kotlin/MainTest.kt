@@ -55,11 +55,11 @@ Monkey 3:
         "test divisible of first monkey is 23 so select first monkey" {
             val trueMonkey = 1
             val falseMonkey = 2
-            sampleInput[0].testDivisible()(46, trueMonkey, falseMonkey) shouldBe trueMonkey
-            sampleInput[0].testDivisible()(47, trueMonkey, falseMonkey) shouldBe falseMonkey
+            sampleInput[0].divisibleRule()(46, trueMonkey, falseMonkey) shouldBe trueMonkey
+            sampleInput[0].divisibleRule()(47, trueMonkey, falseMonkey) shouldBe falseMonkey
         }
         "throw to monkey 2 if true and monkey 3 if false" {
-            val divisibleRule = sampleInput[0].testDivisible()
+            val divisibleRule = sampleInput[0].divisibleRule()
             sampleInput[0].monkeyToThrowTo(divisibleRule)(46) shouldBe 2
             sampleInput[0].monkeyToThrowTo(divisibleRule)(47) shouldBe 3
         }

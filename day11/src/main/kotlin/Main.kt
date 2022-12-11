@@ -7,14 +7,14 @@ data class Monkey(
     val monkeyNumber: Int,
     val items: MutableList<Long>,
     val worryUpdater: WorryUpdater,
-    val monkeyToThrowTo: (Long)->Int,
+    val monkeyToThrowTo: (Worry)->Int,
     var worryReducer: WorryReducer,
     var noOfOperations: Long = 0L )
 
 fun List<MonkeyData>.toMonkeys(worryReducer: WorryReducer) = map{it.toMonkey(worryReducer)}
 
 fun MonkeyData.toMonkey(worryReducer: WorryReducer)
-   = Monkey(monkeyNumber(),startingItems(), worryUpdater(worryReducer), monkeyToThrowTo(testDivisible()), worryReducer)
+   = Monkey(monkeyNumber(),startingItems(), worryUpdater(worryReducer), monkeyToThrowTo(divisibleRule()), worryReducer)
 
 fun MonkeyData.monkeyNumber() = first().removePrefix("Monkey ").removeSuffix(":").toInt()
 
@@ -32,13 +32,13 @@ fun worryUpdater(symbol:String, param2:String, worryReducer:WorryReducer): Worry
 
 fun MonkeyData.divisibleNo() = get(3).removePrefix("  Test: divisible by ").toLong()
 
-fun MonkeyData.testDivisible() =
+fun MonkeyData.divisibleRule() =
     {worry:Worry, trueMonkey:Int, falseMonkey:Int -> if ((worry % divisibleNo()) == 0L) trueMonkey else falseMonkey}
 
 fun MonkeyData.monkeyToThrowTo(divisibleRule: (Worry, Int, Int)-> Int): (Worry) -> Int {
-    val trueMonkey = get(4).removePrefix("    If true: throw to monkey ").toInt()
-    val falseMonkey = get(5).removePrefix("    If false: throw to monkey ").toInt()
-    return { worry:Worry -> divisibleRule(worry, trueMonkey, falseMonkey)}
+    val trueMonkeyIndex = get(4).removePrefix("    If true: throw to monkey ").toInt()
+    val falseMonkeyIndex = get(5).removePrefix("    If false: throw to monkey ").toInt()
+    return { worry:Worry -> divisibleRule(worry, trueMonkeyIndex, falseMonkeyIndex)}
 }
 
 //partOne
