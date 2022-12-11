@@ -40,7 +40,7 @@ fun List<List<String>>.toMonkeys(worryReducer: (Long)->Long) = map{it.toMonkey(w
 fun List<Monkey>.processRound() = forEach{monkey -> processAll(monkey)}
 
 fun List<Monkey>.processAll(monkey: Monkey) {
-    monkey.items.indices.forEach { process(monkey, it) }
+    monkey.items.indices.forEach { itemNdx -> process(monkey, itemNdx) }
     monkey.items.removeAll{true}
 }
 
