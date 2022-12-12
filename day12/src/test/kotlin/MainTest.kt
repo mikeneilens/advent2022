@@ -39,7 +39,7 @@ abdefghi
         }
         "find journey size from positon 0,0" {
             val journeyStatus = JourneyStatus()
-            val journeys = findJourneySize(sampleInput, 'E', Position(0,0),0, journeyStatus)
+            val journeys = Position(0,0).findJourneySize(sampleInput, 'E', 0, journeyStatus)
             journeyStatus.minSize shouldBe 31
         }
         "part one with sample input" {
