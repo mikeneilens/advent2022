@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T20:52:38" hostname="MacBook-Pro-2" time="0.026">
+<testsuite name="MainTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2022-12-12T19:27:19" hostname="MacBook-Pro-2" time="1.675">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.018"/>
-  <testcase name="test" classname="MainTest" time="0.001"/>
+  <testcase name="height of position containing a or S is 97" classname="MainTest" time="0.017"/>
+  <testcase name="height of position containing z or E is 97" classname="MainTest" time="0.0"/>
+  <testcase name="surrounding positions of 0,0" classname="MainTest" time="0.002"/>
+  <testcase name="surrounding positions of 1,1" classname="MainTest" time="0.001"/>
+  <testcase name="surrounding positions of 7,4" classname="MainTest" time="0.0"/>
+  <testcase name="valid routes from 0,0" classname="MainTest" time="0.001"/>
+  <testcase name="valid routes from 3,1" classname="MainTest" time="0.002"/>
+  <testcase name="at goal at position 5,2" classname="MainTest" time="0.0"/>
+  <testcase name="find journey size from positon 0,0" classname="MainTest" time="0.002"/>
+  <testcase name="part one with sample input" classname="MainTest" time="0.002"/>
+  <testcase name="part one with puzzle input" classname="MainTest" time="0.809"/>
+  <testcase name="part two with sample input" classname="MainTest" time="0.001"/>
+  <testcase name="part two with puzzle input" classname="MainTest" time="0.811"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
