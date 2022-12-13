@@ -44,24 +44,15 @@ class MainTest: WordSpec( {
             "[1,[2,[3,[4,[5,6,7]]]],8,9]".toSymbols().parse().toString() shouldBe
                     "[ [ Num(value=1), [ Num(value=2), [ Num(value=3), [ Num(value=4), [ Num(value=5), Num(value=6), Num(value=7) ] ] ] ], Num(value=8), Num(value=9) ] ]"
         }
-        "item zero in [1,2,3] is 1, item 1 is 2, item 2 is 3, item 3 is null" {
-            "1,2,3".toSymbols().parse().NumAt(0) shouldBe 1
-            "1,2,3".toSymbols().parse().NumAt(1) shouldBe 2
-            "1,2,3".toSymbols().parse().NumAt(2) shouldBe 3
-            "1,2,3".toSymbols().parse().NumAt(3) shouldBe null
-        }
-        "[1,[2,[3,[4,[5,6,7]]]],8,9] as a list is 1,2,3,4,5,6,7,8,9" {
-            "[1,[2,[3,[4,[5,6,7]]]],8,9]".toSymbols().parse().toList() shouldBe listOf(1,2,3,4,5,6,7,8,9)
-        }
         " with 1,2,3 and 2,2,3 they are in the right order because 1 < 2  " {
             val left = "1,2,3".toSymbols().parse()
             val right = "2,2,3".toSymbols().parse()
-//            compare(left, right) shouldBe true
+            compare(left, right) shouldBe true
         }
         "Compare [1,1,3,1,1] vs [1,1,5,1,1] should be true" {
             val left = "[1,1,3,1,1]".toSymbols().parse()
             val right = "[1,1,5,1,1]".toSymbols().parse()
-//            compare(left, right) shouldBe true
+            compare(left, right) shouldBe true
         }
         "Compare [[1],[2,3,4]] vs [[1],4] should be true" {
             val left = "[[1],[2,3,4]]".toSymbols().parse()

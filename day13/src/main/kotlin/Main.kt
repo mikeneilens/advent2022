@@ -24,27 +24,6 @@ sealed class Item {
     }
 }
 
-fun Item.SubList.toList():List<Int> {
-    fun Item.SubList.traverse(l:MutableList<Int> = mutableListOf()) {
-        items.forEach { item -> when(item) {
-            is Item.Num -> l.add(item.value)
-            is Item.SubList -> item.traverse(l)
-        }
-        }
-    }
-    val l = mutableListOf<Int>()
-    traverse(l)
-    return l
-}
-
-fun Item.SubList.NumAt(index:Int, n:Int = 0 ):Int? {
-    if (items.isEmpty()) return null
-    val firstItem = items.first()
-    if (n == index && firstItem is Item.Num) return firstItem.value
-
-    else return Item.SubList(this.items.drop(1)).NumAt(index, n + 1)
-}
-
 fun List<String>.parse(output:Item.SubList = Item.SubList(listOf())):Item.SubList {
     if (isEmpty()) return output
     val symbol = first()
@@ -89,8 +68,8 @@ fun partOne(data:List<String>):Int {
     var total = 0
     data.chunked(2).forEachIndexed { index, pair ->
         val (left, right) = pair
-        val result = compare(left.toSymbols().parse(),right.toSymbols().parse())
-        if (result is Boolean && result == true) total += index + 1
+        val result = compare(left.toSymbols().parse(), right.toSymbols().parse())
+        if (result == true) total += index + 1
     }
     return total
 }
