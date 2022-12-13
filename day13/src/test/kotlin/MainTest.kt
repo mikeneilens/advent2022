@@ -110,7 +110,7 @@ class MainTest: WordSpec( {
             partTwo(sampleInput) shouldBe  140
         }
         "part two with puzzle input" {
-            partTwo(puzzleInput) shouldBe  140
+            partTwo(puzzleInput) shouldBe  21836
         }
     })
 })

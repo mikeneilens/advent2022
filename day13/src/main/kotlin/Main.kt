@@ -1,5 +1,3 @@
-fun helloWorld() = "hello world"
-
 fun String.toSymbols():List<String> {
     val symbols = mutableListOf<String>()
     var prevWasNum = false
@@ -59,33 +57,32 @@ fun List<String>.parse(output:Item.SubList = Item.SubList(listOf())):Item.SubLis
 fun List<String>.nextIndex():Int {
     var open = 1
     var ndx = 0
-    while (open >0) {
-        if (this[ndx] == "[") open++
-        if (this[ndx] == "]") open--
+    while (open > 0) {
+        if (this[ndx] == "[") open++ else if (this[ndx] == "]") open--
         ndx++
     }
     return ndx + 1
 }
 
-fun compare(left:Item, right:Item):Boolean? {
-    val left1 = if (left is Item.Num) Item.SubList(listOf(left)) else left as Item.SubList
-    val right1 = if (right is Item.Num ) Item.SubList(listOf(right)) else right as Item.SubList
+fun compare(_left:Item, _right:Item):Boolean? {
+    val left = if (_left is Item.Num) Item.SubList(listOf(_left)) else _left as Item.SubList
+    val right = if (_right is Item.Num ) Item.SubList(listOf(_right)) else _right as Item.SubList
 
-    if (left1.items.isEmpty() && right1.items.isNotEmpty()) return true
-    if (right1.items.isEmpty() && left1.items.isNotEmpty()) return false
-    if (right1.items.isEmpty() && left1.items.isEmpty()) return null
+    if (left.items.isEmpty() && right.items.isNotEmpty()) return true
+    if (right.items.isEmpty() && left.items.isNotEmpty()) return false
+    if (right.items.isEmpty() && left.items.isEmpty()) return null
 
-    val leftFirst = left1.items.first()
-    val rightFirst = right1.items.first()
+    val leftFirst = left.items.first()
+    val rightFirst = right.items.first()
     if (leftFirst is Item.Num && rightFirst is Item.Num) {
         if (leftFirst.value < rightFirst.value) return true
         if (rightFirst.value < leftFirst.value) return false
     }
     if (leftFirst is Item.SubList || rightFirst is Item.SubList) {
-        val compare = compare(leftFirst,rightFirst)
+        val compare = compare(leftFirst, rightFirst)
         if (compare != null) return compare
     }
-    return compare(Item.SubList(left1.items.drop(1)), Item.SubList(right1.items.drop(1)) )
+    return compare(Item.SubList(left.items.drop(1)), Item.SubList(right.items.drop(1)) )
 }
 
 fun partOne(data:List<String>):Int {
