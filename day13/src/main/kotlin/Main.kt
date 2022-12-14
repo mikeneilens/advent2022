@@ -1,17 +1,16 @@
 fun String.toSymbols():List<String> {
     val symbols = mutableListOf<String>()
-    var prevWasNum = false
-    forEach{char ->
+    forEachIndexed{index, char ->
         if (char == '[' || char == ']') symbols.add(char.toString())
-        if (char in '0'..'9') {
-            if (prevWasNum)
+        else if (char in '0'..'9') {
+            if (prevIsNum(index))
                 symbols[symbols.lastIndex] = symbols[symbols.lastIndex] + char.toString()
             else  symbols.add(char.toString())
-            prevWasNum = true
-        } else prevWasNum = false
+        }
     }
     return symbols
 }
+fun String.prevIsNum(i:Int) = (i> 0 && get(i -1) in '0'..'9' )
 
 sealed class Item {
     data class Num(val value:Int):Item()
