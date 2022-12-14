@@ -3,7 +3,7 @@ data class Position(val x:Int, val y:Int)
 fun String.toPosition() = Position(split(",").first().toInt(),split(",").last().toInt())
 
 
-fun List<String>.popluate(map:MutableMap<Position, Char>) = forEach {it.populate(map)}
+fun List<String>.populate(map:MutableMap<Position, Char>) = forEach {it.populate(map)}
 
 fun String.populate(map:MutableMap<Position, Char>) {
     if (split(" -> ").size < 2) return
@@ -17,9 +17,6 @@ fun String.populate(map:MutableMap<Position, Char>) {
     drop(indexOfFirst { it == '>' } + 2).populate(map)
 }
 
-fun Map<Position, Char>.firstBelow(position: Position): Position? =
-    toList().filter { it.first.x == position.x && it.first.y > position.y }.sortedBy { it.first.y }.firstOrNull()?.first
-
 fun MutableMap<Position, Char>.dropSand(sand:Position, maxY:Int):Position? {
     if (this[sand] != null) return null
     var x = sand.x
@@ -29,9 +26,10 @@ fun MutableMap<Position, Char>.dropSand(sand:Position, maxY:Int):Position? {
         else if (!containsKey(Position(x - 1 , y + 1))) { x--; y++}
         else if (!containsKey(Position(x  + 1, y + 1))) { x++; y++}
     }
-    if (y >= maxY) return null
-    this[Position(x, y)] = 'O'
-    return Position(x, y)
+    return if (y >= maxY) null else {
+        this[Position(x, y)] = 'O'
+        Position(x, y)
+    }
 }
 
 fun MutableMap<Position, Char>.process(maxY:Int):Map<Position,Char> {
@@ -42,7 +40,7 @@ fun MutableMap<Position, Char>.process(maxY:Int):Map<Position,Char> {
     }
     return this
 }
-
+/*
 fun MutableMap<Position, Char>.toText():String{
     var s=""
     (0..10).forEach{y->
@@ -54,10 +52,10 @@ fun MutableMap<Position, Char>.toText():String{
     }
     return s
 }
-
+*/
 fun partOne2(data:List<String>):Int {
     val map = mutableMapOf<Position, Char>()
-    data.popluate(map)
+    data.populate(map)
     val maxY = map.toList().maxOf { it.first.y }
     map.process(maxY)
     return map.toList().count{it.second == 'O'}
@@ -65,10 +63,10 @@ fun partOne2(data:List<String>):Int {
 
 fun partTwo2(data:List<String>):Int {
     val map = mutableMapOf<Position, Char>()
-    data.popluate(map)
+    data.populate(map)
     val maxY = map.toList().maxOf { it.first.y }
-    val maxx = map.toList().maxOf { it.first.x }
-    ((-maxx * 2)..(+maxx * 2)).forEach{ x -> map[Position(x,maxY + 2)] = '#' }
+    val maxX = map.toList().maxOf { it.first.x }
+    ((-maxX * 2)..(+maxX * 2)).forEach{ x -> map[Position(x,maxY + 2)] = '#' }
     map.process(maxY + 2)
     return map.toList().count{it.second == 'O'}
 }

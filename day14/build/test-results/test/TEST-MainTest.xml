@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-12-14T23:31:19" hostname="MacBook-Pro-2" time="0.2">
+<testsuite name="MainTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-12-14T23:32:55" hostname="MacBook-Pro-2" time="0.251">
   <properties/>
-  <testcase name="part one with sample input" classname="MainTest" time="0.02"/>
-  <testcase name="part one with puzzle input" classname="MainTest" time="0.032"/>
-  <testcase name="part two with sample input" classname="MainTest" time="0.001"/>
-  <testcase name="part two with puzzle input" classname="MainTest" time="0.137"/>
+  <testcase name="part one with sample input" classname="MainTest" time="0.022"/>
+  <testcase name="part one with puzzle input" classname="MainTest" time="0.04"/>
+  <testcase name="part two with sample input" classname="MainTest" time="0.002"/>
+  <testcase name="part two with puzzle input" classname="MainTest" time="0.176"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
