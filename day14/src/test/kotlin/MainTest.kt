@@ -23,3 +23,15 @@ class MainTest: WordSpec( {
         }
     })
 })
+
+fun MutableMap<Position, Char>.toText():String{
+    var s=""
+    (0..10).forEach{y->
+        (480..520).forEach{x ->
+            if (this[Position(x,y)] != null) s += this[Position(x,y)]
+            else s += "."
+        }
+        s += "\n"
+    }
+    return s
+}

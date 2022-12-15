@@ -14,44 +14,31 @@ fun String.populate(map:MutableMap<Position, Char>) {
     drop(indexOfFirst { it == '>' } + 2).populate(map)
 }
 
+enum class PossibleMove(val canMove:(Map<Position,Char>, Int, Int)->Boolean, val newX:(Int)->Int ) {
+    Down (canMove={ map, x, y -> !map.containsKey(Position(x, y + 1)) }, newX = { x -> x } ) ,
+    DownLeft (canMove={ map, x, y -> !map.containsKey(Position(x - 1, y + 1)) }, newX = { x -> x - 1 } ) ,
+    DownRight (canMove={ map, x, y -> !map.containsKey(Position(x + 1, y + 1)) }, newX = { x -> x + 1 } )
+}
+
 fun MutableMap<Position, Char>.dropSand(sand:Position, maxY:Int):Position? {
     if (isNotEmpty(sand)) return null
     var (x, y) = sand
-    while (y < maxY  && ( spaceBelowIsEmpty(x, y) || spaceBelowLeftIsEmpty(x, y)||spaceBelowLRightIsEmpty(x, y)  )) {
-        if (spaceBelowIsEmpty(x, y)) y++
-        else if (spaceBelowLeftIsEmpty(x, y)) { x--; y++}
-        else if (spaceBelowLRightIsEmpty(x, y)) { x++; y++}
+    while (y < maxY  && ( PossibleMove.values().any{ it.canMove(this,x,y) }  )) {
+        x = PossibleMove.values().first{ it.canMove(this, x,y) }.newX(x)
+        y++
     }
-    return if (y < maxY)  {
-        placeSand(Position(x, y))
-        Position(x, y)
-    } else null
+    return if (y < maxY) placeSand(Position(x, y)) else null
 }
 
 fun MutableMap<Position, Char>.placeRock(p:Position) {this[p] = '#'}
-fun MutableMap<Position, Char>.placeSand(p:Position) {this[p] = 'O'}
+fun MutableMap<Position, Char>.placeSand(p:Position):Position {this[p] = 'O'; return p}
 fun MutableMap<Position, Char>.isNotEmpty(p:Position) = this[p] != null
-fun MutableMap<Position, Char>.spaceBelowIsEmpty(x:Int, y:Int) = !containsKey(Position(x, y + 1))
-fun MutableMap<Position, Char>.spaceBelowLeftIsEmpty(x:Int, y:Int) = !containsKey(Position(x - 1, y + 1))
-fun MutableMap<Position, Char>.spaceBelowLRightIsEmpty(x:Int, y:Int) = !containsKey(Position(x + 1, y + 1))
 
 fun MutableMap<Position, Char>.process(maxY:Int):Map<Position,Char> {
     while (dropSand(Position(500,0), maxY) != null) { }
     return this
 }
-/*
-fun MutableMap<Position, Char>.toText():String{
-    var s=""
-    (0..10).forEach{y->
-        (480..520).forEach{x ->
-            if (this[Position(x,y)] != null) s += this[Position(x,y)]
-            else s += "."
-        }
-        s += "\n"
-    }
-    return s
-}
-*/
+
 fun partOne2(data:List<String>):Int {
     val map = mutableMapOf<Position, Char>()
     data.populate(map)
