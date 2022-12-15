@@ -16,30 +16,18 @@ sealed class Item {
     data class Num(val value:Int):Item()
     class SubList(val items:List<Item>):Item()
 
-    override fun toString():String {
-        return if (this is Num) return "num $value"
-        else if (this is SubList) return "[ ${ items.map{it.toString() }.joinToString()} ]"
-        else ""
-    }
+    override fun toString():String = when (this) {
+            is Num -> "num $value"
+            is SubList -> "[ ${items.joinToString { item -> item.toString() }} ]"
+        }
 }
 
-fun List<String>.parse(output:Item.SubList = Item.SubList(listOf())):Item.SubList {
-    if (isEmpty()) return output
+fun List<String>.parse(output:Item.SubList = Item.SubList(listOf()), expressionSize:Int = 0): Pair<Item.SubList, Int> {
+    if (isEmpty()) return Pair(output, expressionSize)
     val symbol = first()
-    if (symbol == "]") return output
-    val (item, dropQty)  = if ( symbol.toIntOrNull() != null) Pair(Item.Num(symbol.toInt()),1)
-                            else Pair( drop(1).parse(), drop(1).nextIndex())
-    return drop(dropQty).parse(Item.SubList(output.items + item ))
-}
-
-fun List<String>.nextIndex():Int {
-    var open = 1
-    var ndx = 0
-    while (open > 0) {
-        if (this[ndx] == "[") open++ else if (this[ndx] == "]") open--
-        ndx++
-    }
-    return ndx + 1
+    if (symbol == "]") return Pair(output,expressionSize + 1)
+    val (item, symbolsToDrop) = if (symbol.toIntOrNull() != null) Pair(Item.Num(symbol.toInt()), 1) else drop(1).parse(expressionSize = 1)
+    return drop(symbolsToDrop).parse(Item.SubList(output.items + item ),expressionSize + symbolsToDrop)
 }
 
 fun compare(_left:Item, _right:Item):Boolean? {
@@ -67,15 +55,16 @@ fun partOne(data:List<String>):Int {
     var total = 0
     data.chunked(2).forEachIndexed { index, pair ->
         val (left, right) = pair
-        val result = compare(left.toSymbols().parse(), right.toSymbols().parse())
+        val (leftParsed, _) = left.toSymbols().parse(expressionSize = 0)
+        val (rightParsed, _) = right.toSymbols().parse(expressionSize = 0)
+        val result = compare(leftParsed, rightParsed)
         if (result == true) total += index + 1
     }
     return total
 }
 
 fun partTwo(data:List<String>):Int {
-    val items = (data + "[[2]]" + "[[6]]"  ). map{it.toSymbols().parse()}
+    val items = (data + "[[2]]" + "[[6]]"  ). map{it.toSymbols().parse(expressionSize = 0).first}
     val sorted = items.sortedWith{ l:Item.SubList, r:Item.SubList -> if (compare(l,r) == true) -1 else 1 }
     return (sorted.indexOfFirst{it.toString() == "[ [ [ Num(value=2) ] ] ]"} + 1) * (sorted.indexOfFirst{it.toString() == "[ [ [ Num(value=6) ] ] ]"} + 1)
-
 }
