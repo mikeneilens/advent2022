@@ -59,14 +59,14 @@ class MainTest: WordSpec( {
                 Sensor(position=Position(x=20, y=14), beacon=Position(x=25, y=17)),
                 Sensor(position=Position(x=16, y=7), beacon=Position(x=15, y=3)))
         }
-        "using the sample input the number of beacons or row 10 is 1" {
+        "using the sample input the number of beacons on row 10 is 1" {
             sampleInput.toSensors().positionsOfBeaconsOnRow(10).size shouldBe 1
         }
-        "consolidating range 1..10 and 4..15 gives 1..15, consolidating 1..10 and 20..30 gives 1..10, 20..30" {
-            consolidateRanges(1..10, 4..15) shouldBe listOf(1..15)
+        "squashing range 1..10 and 4..15 gives 1..15, is squashed to 1..10 and 20..30 gives 1..10, 20..30" {
+            squashRanges(1..10, 4..15) shouldBe listOf(1..15)
         }
-        "consolidating a list of ranges gives a shorter list of ranges" {
-            listOf(-2..2, 2..2, 2..14, 12..12, 14..18, 16..24).consolidateRanges() shouldBe listOf(-2..24)
+        "squashing a list of ranges gives a shorter list of ranges" {
+            listOf(-2..2, 2..2, 2..14, 12..12, 14..18, 16..24).squashRanges() shouldBe listOf(-2..24)
         }
         "using the sample input and row 10 part one is 26" {
             partOne(sampleInput, 10) shouldBe 26
@@ -76,8 +76,14 @@ class MainTest: WordSpec( {
         }
     })
     "Part two" should ({
-        "test" {
-            helloWorld() shouldBe "hello world"
+        "-2..3, 4..12, 10..14, 14..14, 14..26, 16..16 squashed to -2..26" {
+            listOf(-2..3, 4..12, 10..14, 14..14, 14..26, 16..16).squashRanges() shouldBe listOf(-2..26)
+        }
+        "part two with sample Input" {
+            partTwo(sampleInput, 20) shouldBe 56000011L
+        }
+        "part two with puzzle Input" {
+            partTwo(puzzleInput, 4000000) shouldBe 13134039205729L
         }
     })
 })

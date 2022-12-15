@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">15</div>
+<div class="counter">17</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.048s</div>
+<div class="counter">3.451s</div>
 <p>duration</p>
 </div>
 </td>
@@ -63,9 +63,6 @@
 <li>
 <a href="#tab0">Tests</a>
 </li>
-<li>
-<a href="#tab1">Standard output</a>
-</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Tests</h2>
@@ -78,13 +75,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">consolidating a list of ranges gives a shorter list of ranges</td>
-<td class="success">0.005s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">consolidating range 1..10 and 4..15 gives 1..15, consolidating 1..10 and 20..30 gives 1..10, 20..30</td>
-<td class="success">0s</td>
+<td class="success">-2..3, 4..12, 10..14, 14..14, 14..26, 16..16 squashed to -2..26</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -94,36 +86,51 @@
 </tr>
 <tr>
 <td class="success">parse Sensor at x=2, y=18: closest beacon is at x=-2, y=15</td>
-<td class="success">0.022s</td>
+<td class="success">0.024s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parse sensors in sample input</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">using the puzzle input and row 2000000 part one is 5083287</td>
-<td class="success">0.013s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">using the sampe input the sensors in range on line 10 are</td>
-<td class="success">0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">using the sample input and row 10 part one is 26</td>
 <td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">using the sample input the number of beacons or row 10 is 1</td>
+<td class="success">part two with puzzle Input</td>
+<td class="success">3.394s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">part two with sample Input</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">squashing a list of ranges gives a shorter list of ranges</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">squashing range 1..10 and 4..15 gives 1..15, is squashed to 1..10 and 20..30 gives 1..10, 20..30</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">using the puzzle input and row 2000000 part one is 5083287</td>
+<td class="success">0.017s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">using the sampe input the sensors in range on line 10 are</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">using the sample input and row 10 part one is 26</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">using the sample input the number of beacons on row 10 is 1</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
@@ -134,53 +141,25 @@
 </tr>
 <tr>
 <td class="success">xRange on row 16 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 8..8</td>
-<td class="success">0s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">xRange on row 17 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is null</td>
-<td class="success">0s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">xRange on row 7 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is -1..17</td>
-<td class="success">0.001s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">xRange on row 8 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 0..16</td>
-<td class="success">0.001s</td>
+<td class="success">0s</td>
 <td class="success">passed</td>
 </tr>
 </table>
-</div>
-<div id="tab1" class="tab">
-<h2>Standard output</h2>
-<span class="code">
-<pre>2..2 -2..2 [-2..2]
-2..14 -2..2 [-2..14]
-12..12 -2..14 [-2..14]
-14..18 -2..14 [-2..18]
-16..24 -2..18 [-2..24]
-2..2 -2..2 [-2..2]
-2..14 -2..2 [-2..14]
-12..12 -2..14 [-2..14]
-14..18 -2..14 [-2..18]
-16..24 -2..18 [-2..24]
-[-2..24]
-27
--432198..528004 -432198..438610 [-432198..528004]
-521114..1588706 -432198..528004 [-432198..1588706]
-592176..2511062 -432198..1588706 [-432198..2511062]
-620264..839072 -432198..2511062 [-432198..2511062]
-1495468..3108752 -432198..2511062 [-432198..3108752]
-2160480..3670656 -432198..3108752 [-432198..3670656]
-3108752..4130930 -432198..3670656 [-432198..4130930]
-3322867..4651089 -432198..4130930 [-432198..4651089]
-[-432198..4651089]
-5083288
-</pre>
-</span>
 </div>
 </div>
 <div id="footer">
@@ -190,7 +169,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.1</a> at 15-Dec-2022 15:36:54</p>
+<a href="http://www.gradle.org">Gradle 7.1</a> at 15-Dec-2022 16:42:16</p>
 </div>
 </div>
 </body>

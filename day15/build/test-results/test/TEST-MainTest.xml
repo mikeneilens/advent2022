@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2022-12-15T15:36:54" hostname="MacBook-Pro-2" time="0.083">
+<testsuite name="MainTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2022-12-15T16:42:13" hostname="MacBook-Pro-2" time="3.503">
   <properties/>
-  <testcase name="parse Sensor at x=2, y=18: closest beacon is at x=-2, y=15" classname="MainTest" time="0.022"/>
-  <testcase name="parse sensors in sample input" classname="MainTest" time="0.001"/>
+  <testcase name="parse Sensor at x=2, y=18: closest beacon is at x=-2, y=15" classname="MainTest" time="0.024"/>
+  <testcase name="parse sensors in sample input" classname="MainTest" time="0.002"/>
   <testcase name="manhatten size of Sensor at x=8, y=7: closest beacon is at x=2, y=10, is 9" classname="MainTest" time="0.0"/>
-  <testcase name="xRange on row 7 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is -1..17" classname="MainTest" time="0.001"/>
-  <testcase name="xRange on row 8 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 0..16" classname="MainTest" time="0.001"/>
-  <testcase name="xRange on row 16 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 8..8" classname="MainTest" time="0.0"/>
-  <testcase name="xRange on row 17 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is null" classname="MainTest" time="0.0"/>
+  <testcase name="xRange on row 7 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is -1..17" classname="MainTest" time="0.002"/>
+  <testcase name="xRange on row 8 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 0..16" classname="MainTest" time="0.0"/>
+  <testcase name="xRange on row 16 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is 8..8" classname="MainTest" time="0.001"/>
+  <testcase name="xRange on row 17 for Sensor at x=8, y=7: closest beacon is at x=2, y=10, y=15 is null" classname="MainTest" time="0.001"/>
   <testcase name="xRange on row 10 for Sensor at x=20, y=14: closest beacon is at x=25, y=17 is" classname="MainTest" time="0.001"/>
-  <testcase name="using the sampe input the sensors in range on line 10 are" classname="MainTest" time="0.001"/>
-  <testcase name="using the sample input the number of beacons or row 10 is 1" classname="MainTest" time="0.001"/>
-  <testcase name="consolidating range 1..10 and 4..15 gives 1..15, consolidating 1..10 and 20..30 gives 1..10, 20..30" classname="MainTest" time="0.0"/>
-  <testcase name="consolidating a list of ranges gives a shorter list of ranges" classname="MainTest" time="0.005"/>
-  <testcase name="using the sample input and row 10 part one is 26" classname="MainTest" time="0.002"/>
-  <testcase name="using the puzzle input and row 2000000 part one is 5083287" classname="MainTest" time="0.013"/>
-  <testcase name="test" classname="MainTest" time="0.0"/>
-  <system-out><![CDATA[2..2 -2..2 [-2..2]
-2..14 -2..2 [-2..14]
-12..12 -2..14 [-2..14]
-14..18 -2..14 [-2..18]
-16..24 -2..18 [-2..24]
-2..2 -2..2 [-2..2]
-2..14 -2..2 [-2..14]
-12..12 -2..14 [-2..14]
-14..18 -2..14 [-2..18]
-16..24 -2..18 [-2..24]
-[-2..24]
-27
--432198..528004 -432198..438610 [-432198..528004]
-521114..1588706 -432198..528004 [-432198..1588706]
-592176..2511062 -432198..1588706 [-432198..2511062]
-620264..839072 -432198..2511062 [-432198..2511062]
-1495468..3108752 -432198..2511062 [-432198..3108752]
-2160480..3670656 -432198..3108752 [-432198..3670656]
-3108752..4130930 -432198..3670656 [-432198..4130930]
-3322867..4651089 -432198..4130930 [-432198..4651089]
-[-432198..4651089]
-5083288
-]]></system-out>
+  <testcase name="using the sampe input the sensors in range on line 10 are" classname="MainTest" time="0.0"/>
+  <testcase name="using the sample input the number of beacons on row 10 is 1" classname="MainTest" time="0.001"/>
+  <testcase name="squashing range 1..10 and 4..15 gives 1..15, is squashed to 1..10 and 20..30 gives 1..10, 20..30" classname="MainTest" time="0.001"/>
+  <testcase name="squashing a list of ranges gives a shorter list of ranges" classname="MainTest" time="0.003"/>
+  <testcase name="using the sample input and row 10 part one is 26" classname="MainTest" time="0.001"/>
+  <testcase name="using the puzzle input and row 2000000 part one is 5083287" classname="MainTest" time="0.017"/>
+  <testcase name="-2..3, 4..12, 10..14, 14..14, 14..26, 16..16 squashed to -2..26" classname="MainTest" time="0.001"/>
+  <testcase name="part two with sample Input" classname="MainTest" time="0.002"/>
+  <testcase name="part two with puzzle Input" classname="MainTest" time="3.394"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
