@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2022-12-15T20:03:20" hostname="MacBook-Pro-2" time="0.129">
+<testsuite name="MainTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2022-12-15T20:22:23" hostname="MacBook-Pro-2" time="0.121">
   <properties/>
-  <testcase name="parse string [1,2,3,[4,10],11] into ['1','2','3','[','4','10',']','11',']'" classname="MainTest" time="0.019"/>
-  <testcase name="parse 1,2,3 into sublistOf(Item.Num(1), Item.Num(2), Item.Num(3))" classname="MainTest" time="0.003"/>
+  <testcase name="parse string [1,2,3,[4,10],11] into ['1','2','3','[','4','10',']','11',']'" classname="MainTest" time="0.02"/>
+  <testcase name="parse 1,2,3 into sublistOf(Item.Num(1), Item.Num(2), Item.Num(3))" classname="MainTest" time="0.002"/>
   <testcase name="parse [1,2,3] into sublistOf(Item.Num(1), Item.Num(2), Item.Num(3))" classname="MainTest" time="0.0"/>
-  <testcase name="parse 1,[2,3] into sublistOf(Item.Num(1), sublistOf(Item.Num(2), Item.Num(3)))" classname="MainTest" time="0.001"/>
+  <testcase name="parse 1,[2,3] into sublistOf(Item.Num(1), sublistOf(Item.Num(2), Item.Num(3)))" classname="MainTest" time="0.0"/>
   <testcase name="parse 1,[2,3],4 into sublistOf(Item.Num(1), sublistOf(Item.Num(2), Item.Num(3)), Item.Num(4))" classname="MainTest" time="0.001"/>
   <testcase name="parse [1,[2,[3,[4,[5,6,7]]]],8,9]" classname="MainTest" time="0.001"/>
   <testcase name="with 1,2,3 and 2,2,3 they are in the right order because 1 &lt; 2" classname="MainTest" time="0.001"/>
-  <testcase name="Compare [1,1,3,1,1] vs [1,1,5,1,1] should be true" classname="MainTest" time="0.0"/>
+  <testcase name="Compare [1,1,3,1,1] vs [1,1,5,1,1] should be true" classname="MainTest" time="0.001"/>
   <testcase name="Compare [[1],[2,3,4]] vs [[1],4] should be true" classname="MainTest" time="0.001"/>
   <testcase name="Compare [9] vs [[8,7,6]] should be false" classname="MainTest" time="0.001"/>
   <testcase name="Compare [[4,4],4,4] vs [[4,4],4,4,4] should be true" classname="MainTest" time="0.001"/>
-  <testcase name="Compare [7,7,7,7] vs [7,7,7] should be false" classname="MainTest" time="0.0"/>
-  <testcase name="Compare [] vs [3] should be true" classname="MainTest" time="0.001"/>
+  <testcase name="Compare [7,7,7,7] vs [7,7,7] should be false" classname="MainTest" time="0.001"/>
+  <testcase name="Compare [] vs [3] should be true" classname="MainTest" time="0.0"/>
   <testcase name="Compare [[[]]] vs [[]] should be false" classname="MainTest" time="0.001"/>
-  <testcase name="Compare [1,[2,[3,[4,[5,6,7]]]],8,9] vs [1,[2,[3,[4,[5,6,0]]]],8,9] should be false" classname="MainTest" time="0.001"/>
+  <testcase name="Compare [1,[2,[3,[4,[5,6,7]]]],8,9] vs [1,[2,[3,[4,[5,6,0]]]],8,9] should be false" classname="MainTest" time="0.0"/>
   <testcase name="part one with sample input" classname="MainTest" time="0.002"/>
-  <testcase name="part one with puzzle input" classname="MainTest" time="0.027"/>
-  <testcase name="part two with sample input" classname="MainTest" time="0.002"/>
+  <testcase name="part one with puzzle input" classname="MainTest" time="0.021"/>
+  <testcase name="part two with sample input" classname="MainTest" time="0.003"/>
   <testcase name="part two with puzzle input" classname="MainTest" time="0.018"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
