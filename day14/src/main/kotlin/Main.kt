@@ -19,25 +19,23 @@ fun String.populate(map:MutableMap<Position, Char>) {
 
 fun MutableMap<Position, Char>.dropSand(sand:Position, maxY:Int):Position? {
     if (this[sand] != null) return null
-    var x = sand.x
-    var y = sand.y
-    while (y < maxY  && ( !containsKey(Position(x, y + 1)) || !containsKey(Position(x -1, y + 1)) || !containsKey(Position(x + 1, y + 1))  )) {
-        if (!containsKey(Position(x , y + 1))) y++
-        else if (!containsKey(Position(x - 1 , y + 1))) { x--; y++}
-        else if (!containsKey(Position(x  + 1, y + 1))) { x++; y++}
+    var (x, y) = sand
+    while (y < maxY  && ( spaceBelowIsEmpty(x, y) || spaceBelowLeftIsEmpty(x, y)||spaceBelowLRightIsEmpty(x, y)  )) {
+        if (spaceBelowIsEmpty(x, y)) y++
+        else if (spaceBelowLeftIsEmpty(x, y)) { x--; y++}
+        else if (spaceBelowLRightIsEmpty(x, y)) { x++; y++}
     }
     return if (y >= maxY) null else {
         this[Position(x, y)] = 'O'
         Position(x, y)
     }
 }
+fun MutableMap<Position, Char>.spaceBelowIsEmpty(x:Int, y:Int) = !containsKey(Position(x, y + 1))
+fun MutableMap<Position, Char>.spaceBelowLeftIsEmpty(x:Int, y:Int) = !containsKey(Position(x - 1, y + 1))
+fun MutableMap<Position, Char>.spaceBelowLRightIsEmpty(x:Int, y:Int) = !containsKey(Position(x + 1, y + 1))
 
 fun MutableMap<Position, Char>.process(maxY:Int):Map<Position,Char> {
-    var sand = dropSand(Position(500,0), maxY)
-    while (sand != null) {
-        val result  = dropSand(Position(500,0), maxY)
-        sand = result
-    }
+    while (dropSand(Position(500,0), maxY) != null) { }
     return this
 }
 /*
