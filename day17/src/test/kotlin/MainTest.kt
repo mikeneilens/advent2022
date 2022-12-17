@@ -3,13 +3,13 @@ import io.kotest.matchers.shouldBe
 
 class MainTest: WordSpec( {
     "Part one" should ({
-        "test" {
-            helloWorld() shouldBe "hello world"
+        "do something" {
+
         }
     })
     "Part two" should ({
-        "test" {
-            helloWorld() shouldBe "hello world"
+        "also do something" {
+
         }
     })
 })

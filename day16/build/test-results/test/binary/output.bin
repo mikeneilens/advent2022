@@ -1,0 +1,2 @@
+	CValve(id=DD, flowRate=20, adjoiningValves=[CC, AA, EE], open=true)
+	;Valve(id=HH, flowRate=22, adjoiningValves=[GG], open=true)

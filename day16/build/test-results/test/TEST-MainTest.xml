@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T20:56:34" hostname="MacBook-Pro-2" time="0.025">
+<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-12-16T21:57:05" hostname="MacBook-Pro-2" time="1063.522">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.018"/>
-  <testcase name="test" classname="MainTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="valve name of first line of sample input us AA" classname="MainTest" time="0.033"/>
+  <testcase name="flow rate of first line of sample input us AA" classname="MainTest" time="0.001"/>
+  <testcase name="adjoining valves of first line of sample input us AA" classname="MainTest" time="0.003"/>
+  <testcase name="sample input has 10 valves" classname="MainTest" time="0.009"/>
+  <testcase name="shortest distance from AA to CC should be 2" classname="MainTest" time="0.005"/>
+  <testcase name="shortest distance from AA to BB should be 1" classname="MainTest" time="0.003"/>
+  <testcase name="shortest distance from AA to GG should be 4" classname="MainTest" time="0.003"/>
+  <testcase name="get best value to go to first in the sample input" classname="MainTest" time="1063.39"/>
+  <testcase name="test" classname="MainTest" time="0.001"/>
+  <system-out><![CDATA[Valve(id=DD, flowRate=20, adjoiningValves=[CC, AA, EE], open=true)
+Valve(id=HH, flowRate=22, adjoiningValves=[GG], open=true)
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
