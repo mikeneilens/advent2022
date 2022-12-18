@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T20:58:30" hostname="MacBook-Pro-2" time="0.027">
+<testsuite name="MainTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-12-18T12:33:14" hostname="MacBook-Pro-2" time="1.149">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.019"/>
+  <testcase name="parse sample input into cubes" classname="MainTest" time="0.028"/>
+  <testcase name="cubes adjacent to Cube(1,1,1) should be" classname="MainTest" time="0.126"/>
+  <testcase name="no of sides not connected for cube(1,1,1) in [cube(1,1,1), cube(2,1,1)]" classname="MainTest" time="0.001"/>
+  <testcase name="no of sides not connected for cube(2,1,1) in [cube(1,1,1), cube(2,1,1)]" classname="MainTest" time="0.001"/>
+  <testcase name="part one with sample input is 64" classname="MainTest" time="0.001"/>
+  <testcase name="part one with puzzle input is 4400" classname="MainTest" time="0.971"/>
   <testcase name="test" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
