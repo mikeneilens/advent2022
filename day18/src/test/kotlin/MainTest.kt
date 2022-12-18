@@ -1,9 +1,6 @@
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.ints.shouldBeGreaterThan
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import javafx.geometry.Pos
 
 val sampleInput = """
     2,2,2
@@ -58,30 +55,30 @@ class MainTest: WordSpec( {
             val waterMap = mutableSetOf<Position>()
             val cubes = setOf(Position(1,1,1), Position(1,2,3))
             val waterPosition = Position(1,1,1)
-            waterMap.waterCanMoveTo( cubes, waterPosition, 0..10,0..10,0..10) shouldBe false
+            waterMap.waterCanMoveTo( cubes, waterPosition, rangeToCheck(0..10,0..10,0..10)) shouldBe false
         }
         "water can not move to a space occupied by water" {
             val waterMap = mutableSetOf(Position(1,1,1))
             val cubes = setOf(Position(1,2,1), Position(1,2,3))
             val waterPosition = Position(1,1,1)
-            waterMap.waterCanMoveTo( cubes, waterPosition, 0..10,0..10,0..10) shouldBe false
+            waterMap.waterCanMoveTo( cubes, waterPosition, rangeToCheck(0..10,0..10,0..10)) shouldBe false
         }
         "water can not move to a space not in range" {
             val waterMap = mutableSetOf(Position(1,1,1))
             val cubes = setOf(Position(1,2,1), Position(1,2,3))
             val waterPosition = Position(1,-1,1)
-            waterMap.waterCanMoveTo( cubes, waterPosition, 0..10,0..10,0..10) shouldBe false
+            waterMap.waterCanMoveTo( cubes, waterPosition, rangeToCheck(0..10,0..10,0..10)) shouldBe false
         }
         "water can move to a space occupied by cubes or water and in range" {
             val waterMap = mutableSetOf(Position(1,1,1))
             val cubes = setOf(Position(1,2,1), Position(1,2,3))
             val waterPosition = Position(1,1,2)
-            waterMap.waterCanMoveTo( cubes, waterPosition, 0..10,0..10,0..10) shouldBe true
+            waterMap.waterCanMoveTo( cubes, waterPosition, rangeToCheck(0..10,0..10,0..10)) shouldBe true
         }
         "filling up a water map using simple input leaves 58 sides facing water" {
             val cubes = sampleInput.toCubes()
             val waterMap = mutableSetOf<Position>()
-            waterMap.fillUp(cubes.map{it.p}.toSet(),cubes.xRange(),cubes.yRange(), cubes.zRange())
+            waterMap.fillUp(cubes.map{it.p}.toSet(), rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange()))
             val wetSides = waterMap.cubesSidesNextToWater(cubes)
             wetSides shouldBe 58
         }
