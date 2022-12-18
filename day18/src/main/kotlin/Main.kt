@@ -35,19 +35,6 @@ fun Set<Cube>.zRange() = (minOf{it.p.z}-1)..(maxOf{it.p.z} + 1)
 
 fun rangeToCheck(xRange:IntRange, yRange:IntRange, zRange:IntRange) = { p:Position -> p.isWithinRange(xRange,yRange,zRange) }
 
-fun WaterMap.fillUp(cubes:Set<Position>, rangeChecker:(Position)->Boolean) {
-    add(Position(0,0,0))
-    while(addWater(cubes, rangeChecker)) { continue }
-}
-
-fun WaterMap.addWater(cubes:Set<Position>, rangeChecker:(Position)->Boolean ):Boolean {
-    val waterToAdd = firstOrNull{ p -> listOfAdjacentPositions.map{it + p}.any{ waterCanMoveTo(cubes, it, rangeChecker) }}
-    return waterToAdd?.let{
-        val positionsToAdd = listOfAdjacentPositions.map{it + waterToAdd}.filter{ waterCanMoveTo(cubes, it, rangeChecker) }
-        this.addAll(positionsToAdd)
-        true } ?: false
-}
-
 fun WaterMap.waterCanMoveTo(cubes:Set<Position>,position:Position, rangeChecker:(Position)->Boolean) =
        !contains(position) && !cubes.contains(position) && rangeChecker(position)
 
@@ -58,8 +45,21 @@ fun WaterMap.sidesNetToWater(cube:Cube) = cube.adjacentCubes.count { it in this 
 fun partTwo(data:List<String>):Int {
     val cubes = data.toCubes()
     val waterMap = mutableSetOf<Position>()
-    waterMap.fillUp(cubes.map{it.p}.toSet(), rangeToCheck( cubes.xRange(),cubes.yRange(), cubes.zRange()))
+    fillUp(WaterStatus(
+        waterMap,
+        Position(0,0,0),
+        cubes.map{it.p}.toSet(),
+        rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange())
+    ))
     return  waterMap.cubesSidesNextToWater(cubes)
 }
 
+data class WaterStatus(val waterMap: WaterMap, val position: Position, val cubes: Set<Position>, val rangeChecker: (Position) -> Boolean)
 
+val fillUp = DeepRecursiveFunction<WaterStatus,Unit>{ waterStatus ->
+    val (waterMap, position, cubes, rangeChecker) = waterStatus
+    waterMap.add(position)
+    val waterToAdd =  listOfAdjacentPositions.map{it + position}
+        .filter{ adjacentPosition -> waterMap.waterCanMoveTo(cubes, adjacentPosition, rangeChecker) }
+    waterToAdd.forEach { adjacentPosition -> callRecursive(waterStatus.copy(position = adjacentPosition)) }
+}

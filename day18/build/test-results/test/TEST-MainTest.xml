@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-18T19:14:49" hostname="MacBook-Pro-2" time="4.949">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-18T20:06:30" hostname="MacBook-Pro-2" time="0.293">
   <properties/>
-  <testcase name="parse sample input into cubes" classname="MainTest" time="0.177"/>
+  <testcase name="parse sample input into cubes" classname="MainTest" time="0.176"/>
   <testcase name="cubes adjacent to Cube(1,1,1) should be" classname="MainTest" time="0.017"/>
   <testcase name="no of sides not connected for cube(1,1,1) in [cube(1,1,1), cube(2,1,1)]" classname="MainTest" time="0.0"/>
-  <testcase name="no of sides not connected for cube(2,1,1) in [cube(1,1,1), cube(2,1,1)]" classname="MainTest" time="0.001"/>
-  <testcase name="part one with sample input is 64" classname="MainTest" time="0.001"/>
-  <testcase name="part one with puzzle input is 4400" classname="MainTest" time="0.0"/>
+  <testcase name="no of sides not connected for cube(2,1,1) in [cube(1,1,1), cube(2,1,1)]" classname="MainTest" time="0.0"/>
+  <testcase name="part one with sample input is 64" classname="MainTest" time="0.002"/>
+  <testcase name="part one with puzzle input is 4400" classname="MainTest" time="0.001"/>
   <testcase name="water can not move to a space occupied by a cube" classname="MainTest" time="0.001"/>
   <testcase name="water can not move to a space occupied by water" classname="MainTest" time="0.0"/>
   <testcase name="water can not move to a space not in range" classname="MainTest" time="0.001"/>
-  <testcase name="water can move to a space occupied by cubes or water and in range" classname="MainTest" time="0.0"/>
-  <testcase name="filling up a water map using simple input leaves 58 sides facing water" classname="MainTest" time="0.026"/>
-  <testcase name="part two with puzzle input gives 2522" classname="MainTest" time="4.697"/>
+  <testcase name="water can move to a space occupied by cubes or water and in range" classname="MainTest" time="0.001"/>
+  <testcase name="filling up a water map using simple input leaves 58 sides facing water" classname="MainTest" time="0.006"/>
+  <testcase name="part two with puzzle input gives 2522" classname="MainTest" time="0.057"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

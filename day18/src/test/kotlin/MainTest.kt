@@ -78,7 +78,12 @@ class MainTest: WordSpec( {
         "filling up a water map using simple input leaves 58 sides facing water" {
             val cubes = sampleInput.toCubes()
             val waterMap = mutableSetOf<Position>()
-            waterMap.fillUp(cubes.map{it.p}.toSet(), rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange()))
+            fillUp(WaterStatus(
+                waterMap,
+                Position(0,0,0),
+                cubes.map{it.p}.toSet(),
+                rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange())
+            ))
             val wetSides = waterMap.cubesSidesNextToWater(cubes)
             wetSides shouldBe 58
         }
