@@ -35,25 +35,6 @@ fun Set<Cube>.zRange() = (minOf{it.p.z}-1)..(maxOf{it.p.z} + 1)
 
 fun rangeToCheck(xRange:IntRange, yRange:IntRange, zRange:IntRange) = { p:Position -> p.isWithinRange(xRange,yRange,zRange) }
 
-fun WaterMap.waterCanMoveTo(cubes:Set<Position>,position:Position, rangeChecker:(Position)->Boolean) =
-       !contains(position) && !cubes.contains(position) && rangeChecker(position)
-
-fun WaterMap.cubesSidesNextToWater(cubes:Set<Cube>) = cubes.sumOf{cube ->  sidesNetToWater(cube)}
-
-fun WaterMap.sidesNetToWater(cube:Cube) = cube.adjacentCubes.count { it in this }
-
-fun partTwo(data:List<String>):Int {
-    val cubes = data.toCubes()
-    val waterMap = mutableSetOf<Position>()
-    fillUp(WaterStatus(
-        waterMap,
-        Position(0,0,0),
-        cubes.map{it.p}.toSet(),
-        rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange())
-    ))
-    return  waterMap.cubesSidesNextToWater(cubes)
-}
-
 data class WaterStatus(val waterMap: WaterMap, val position: Position, val cubes: Set<Position>, val rangeChecker: (Position) -> Boolean)
 
 val fillUp = DeepRecursiveFunction<WaterStatus,Unit>{ waterStatus ->
@@ -62,4 +43,18 @@ val fillUp = DeepRecursiveFunction<WaterStatus,Unit>{ waterStatus ->
     val waterToAdd =  listOfAdjacentPositions.map{it + position}
         .filter{ adjacentPosition -> waterMap.waterCanMoveTo(cubes, adjacentPosition, rangeChecker) }
     waterToAdd.forEach { adjacentPosition -> callRecursive(waterStatus.copy(position = adjacentPosition)) }
+}
+
+fun WaterMap.waterCanMoveTo(cubes:Set<Position>,position:Position, rangeChecker:(Position)->Boolean) =
+       !contains(position) && !cubes.contains(position) && rangeChecker(position)
+
+fun WaterMap.cubesSidesNextToWater(cubes:Set<Cube>) = cubes.sumOf{cube ->  sidesNextToWater(cube)}
+
+fun WaterMap.sidesNextToWater(cube:Cube) = cube.adjacentCubes.count { it in this }
+
+fun partTwo(data:List<String>):Int {
+    val cubes = data.toCubes()
+    val waterMap = mutableSetOf<Position>()
+    fillUp(WaterStatus(waterMap, Position(0,0,0), cubes.map{it.p}.toSet(), rangeToCheck(cubes.xRange(),cubes.yRange(), cubes.zRange())))
+    return  waterMap.cubesSidesNextToWater(cubes)
 }
