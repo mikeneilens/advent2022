@@ -1,7 +1,5 @@
 data class Position( val x:Int, val y:Int, val z:Int) {
     operator fun plus(other:Position):Position = Position(x + other.x, y + other.y, z + other.z)
-
-    fun isWithinRange(xRange:IntRange, yRange:IntRange, zRange:IntRange) = x in xRange && y in yRange && z in zRange
 }
 
 typealias WaterMap = MutableSet<Position>
@@ -12,16 +10,14 @@ val listOfAdjacentPositions = listOf(Position(1,0,0), Position(-1,0,0)
     , Position(0,1,0), Position(0,-1,0)
     , Position(0,0,1),Position(0,0,-1))
 
-data class Cube(
-    val p:Position,
-    val adjacentCubes:Set<Position> = listOfAdjacentPositions.map{it + p}.toSet())
+data class Cube(val p:Position, val adjacentCubes:Set<Position> = listOfAdjacentPositions.map{it + p}.toSet())
 
-    fun List<String>.toCubes() = map{ Cube(it.toDimension(0),it.toDimension(1),it.toDimension(2))}.toSet()
+fun List<String>.toCubes() = map{ Cube(it.toDimension(0),it.toDimension(1),it.toDimension(2))}.toSet()
 fun String.toDimension(n:Int) = split(",")[n].toInt()
 
 fun Set<Cube>.unconnectedSides(cube:Cube) = cube.adjacentCubes.count{adjacent -> adjacent !in positionOfOtherCubes(cube)}
 
-private fun Set<Cube>.positionOfOtherCubes(cube: Cube): List<Position> = filter { it != cube }.map { it.p }
+fun Set<Cube>.positionOfOtherCubes(cube: Cube): List<Position> = filter { it != cube }.map { it.p }
 
 fun partOne(data:List<String>):Int {
     val cubes = data.toCubes()
@@ -33,7 +29,7 @@ fun Set<Cube>.xRange() = (minOf{it.p.x}-1)..(maxOf{it.p.x} + 1)
 fun Set<Cube>.yRange() = (minOf{it.p.y}-1)..(maxOf{it.p.y} + 1)
 fun Set<Cube>.zRange() = (minOf{it.p.z}-1)..(maxOf{it.p.z} + 1)
 
-fun rangeToCheck(xRange:IntRange, yRange:IntRange, zRange:IntRange) = { p:Position -> p.isWithinRange(xRange,yRange,zRange) }
+fun rangeToCheck(xRange:IntRange, yRange:IntRange, zRange:IntRange) = { p:Position -> p.x in xRange && p.y in yRange && p.z in zRange }
 
 data class WaterStatus(val waterMap: WaterMap, val position: Position, val cubes: Set<Position>, val rangeChecker: (Position) -> Boolean)
 
