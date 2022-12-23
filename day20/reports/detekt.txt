@@ -1,0 +1,4 @@
+NewLineAtEndOfFile - [MainTest.kt] at /Users/michaelneilens/github/advent2022/day20/src/test/kotlin/MainTest.kt:15:3 - Signature=MainTest.kt$.MainTest.kt
+NewLineAtEndOfFile - [PuzzleInput.kt] at /Users/michaelneilens/github/advent2022/day20/src/main/kotlin/PuzzleInput.kt:3:29 - Signature=PuzzleInput.kt$.PuzzleInput.kt
+NewLineAtEndOfFile - [Main.kt] at /Users/michaelneilens/github/advent2022/day20/src/main/kotlin/Main.kt:1:33 - Signature=Main.kt$.Main.kt
+FunctionOnlyReturningConstant - [helloWorld] at /Users/michaelneilens/github/advent2022/day20/src/main/kotlin/Main.kt:1:5 - Signature=Main.kt$fun helloWorld()
