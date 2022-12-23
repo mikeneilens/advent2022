@@ -18,9 +18,9 @@ class LinkedList (val value:Long, var next:LinkedList? = null, var prev:LinkedLi
     }
 
     fun nodeToInsertAfter(size: Long): LinkedList? =
-        if (value >= 0) prev?.after(value % size) else prev?.after(size + (value % size))
+        if (value >= 0) prev?.nodeAfter(value % size) else prev?.nodeAfter(size + (value % size))
 
-    fun after(n:Long ):LinkedList = if (n == 0L) this else next?.after(n - 1) ?: this
+    fun nodeAfter(n:Long ):LinkedList = if (n == 0L) this else next?.nodeAfter(n - 1) ?: this
 }
 
 fun String.toLinkedList(listOfNodes:MutableList<LinkedList> = mutableListOf(), multiplier:Int = 1):LinkedList {
@@ -48,7 +48,7 @@ fun partOne(data:String, noOfRepetitions:Int = 1, multiplier:Int = 1):Long {
         }
     }
     val zeroNode = listOfNodes.itemWithValue(0)
-    return (1L..3L).sumOf{zeroNode.after(it * 1000).value}
+    return (1L..3L).sumOf{zeroNode.nodeAfter(it * 1000).value}
 }
 
 fun partTwo(data:String):Long = partOne(data, noOfRepetitions = 10, multiplier = 811589153)

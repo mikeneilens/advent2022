@@ -36,7 +36,7 @@ class Main3Test: WordSpec( {
         "get item 3 positions after zero should be 2" {
             val list = mutableListOf<LinkedList>()
             "1, 2, -3, 3, -2, 0, 4".toLinkedList(list)
-            list.itemWithValue(0).after(3).value shouldBe 2
+            list.itemWithValue(0).nodeAfter(3).value shouldBe 2
         }
 
         "part one with sample input" {
