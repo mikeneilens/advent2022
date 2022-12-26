@@ -24,12 +24,10 @@ class Node(var job:Job) {
 fun List<String>.parse():Map<String, Node> {
     val nodeRegister = mutableMapOf<String, Node>()
     forEach { line ->
-        val node = if (line.jobName() in nodeRegister)
-            nodeRegister.getValue(line.jobName())
-        else {
-            Node(Job.None)
-        }
-        nodeRegister[line.jobName()] = node
+        nodeRegister[line.jobName()] = Node(Job.None)
+    }
+    forEach { line ->
+        val node = nodeRegister.getValue(line.jobName())
         if (line.lineIsANumber()) {
             node.job = Job.LoneNumber(line.param(1).toLong())
         } else {
@@ -42,15 +40,7 @@ fun List<String>.parse():Map<String, Node> {
 fun String.getMathOperations(nodeRegister: MutableMap<String, Node>, node: Node) =
     Job.MathOperation(getNodeForParameter(1, nodeRegister), getNodeForParameter(3, nodeRegister), oper())
 
-fun String.getNodeForParameter(n:Int, nodeRegister:MutableMap<String, Node>):Node {
-    val node = if (param(n) in nodeRegister)
-        nodeRegister.getValue(param(n))
-    else {
-        Node(Job.None)
-    }
-    nodeRegister[param(n)] = node
-    return node
-}
+fun String.getNodeForParameter(n:Int, nodeRegister:MutableMap<String, Node>) = nodeRegister.getValue(param(n))
 
 fun String.jobName() = split(":")[0]
 fun String.lineIsANumber() = param(1).toLongOrNull() != null
