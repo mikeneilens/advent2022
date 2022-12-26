@@ -22,10 +22,7 @@ class Node(var job:Job) {
 }
 
 fun List<String>.parse():Map<String, Node> {
-    val nodeRegister = mutableMapOf<String, Node>()
-    forEach { line ->
-        nodeRegister[line.jobName()] = Node(Job.None)
-    }
+    val nodeRegister = registerNodes()
     forEach { line ->
         val node = nodeRegister.getValue(line.jobName())
         if (line.lineIsANumber()) {
@@ -37,16 +34,20 @@ fun List<String>.parse():Map<String, Node> {
     return nodeRegister
 }
 
-fun String.getMathOperations(nodeRegister: MutableMap<String, Node>, node: Node) =
+fun List<String>.registerNodes(nodeRegister: MutableMap<String, Node> = mutableMapOf()):Map<String, Node> {
+    forEach { line -> nodeRegister[line.jobName()] = Node(Job.None) }
+    return nodeRegister
+}
+
+fun String.getMathOperations(nodeRegister: Map<String, Node>, node: Node) =
     Job.MathOperation(getNodeForParameter(1, nodeRegister), getNodeForParameter(3, nodeRegister), oper())
 
-fun String.getNodeForParameter(n:Int, nodeRegister:MutableMap<String, Node>) = nodeRegister.getValue(param(n))
+fun String.getNodeForParameter(n:Int, nodeRegister:Map<String, Node>) = nodeRegister.getValue(param(n))
 
 fun String.jobName() = split(":")[0]
 fun String.lineIsANumber() = param(1).toLongOrNull() != null
 fun String.param(n:Int) = split(" ")[n]
 fun String.oper() = operMap.getValue( split(" ")[2])
-
 
 fun partOne(data:List<String>):Long {
     val nodeMap = data.parse()
