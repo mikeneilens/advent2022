@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T21:03:17" hostname="MacBook-Pro-2" time="0.024">
+<testsuite name="MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-12-26T11:29:45" hostname="MacBook-Pro-2.local" time="0.059">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.017"/>
-  <testcase name="test" classname="MainTest" time="0.001"/>
+  <testcase name="parse sample input into nodes" classname="MainTest" time="0.022"/>
+  <testcase name="calculate total for sample input as 152" classname="MainTest" time="0.002"/>
+  <testcase name="partone using sample input is 152" classname="MainTest" time="0.001"/>
+  <testcase name="partone using puzzle input is 152" classname="MainTest" time="0.012"/>
+  <testcase name="part two using puzzle input" classname="MainTest" time="0.009"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
