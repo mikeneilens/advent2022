@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-21T21:04:19" hostname="MacBook-Pro-2" time="0.024">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-29T16:23:09" hostname="MacBook-Pro-2" time="0.234">
   <properties/>
-  <testcase name="test" classname="MainTest" time="0.017"/>
-  <testcase name="test" classname="MainTest" time="0.0"/>
+  <testcase name="parse instructions corrctly" classname="MainTest" time="0.03"/>
+  <testcase name="create map" classname="MainTest" time="0.014"/>
+  <testcase name="turn person right" classname="MainTest" time="0.001"/>
+  <testcase name="turn person left" classname="MainTest" time="0.001"/>
+  <testcase name="move person 1 right" classname="MainTest" time="0.002"/>
+  <testcase name="move person 3 right so that it is blocked" classname="MainTest" time="0.001"/>
+  <testcase name="part one with puzzle input" classname="MainTest" time="0.064"/>
+  <testcase name="positions for a line" classname="MainTest" time="0.002"/>
+  <testcase name="update map with all initial next positions for each tile" classname="MainTest" time="0.016"/>
+  <testcase name="update first line of the map with next positions from line that maps to the top line" classname="MainTest" time="0.018"/>
+  <testcase name="udpate all edges" classname="MainTest" time="0.015"/>
+  <testcase name="part two with puzzle input" classname="MainTest" time="0.038"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
