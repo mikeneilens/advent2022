@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2022-12-30T16:35:58" hostname="MacBook-Pro-2" time="0.935">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-30T17:47:11" hostname="MacBook-Pro-2" time="0.9">
   <properties/>
-  <testcase name="creating ElfPositions from small sample data" classname="MainTest" time="0.019"/>
+  <testcase name="creating ElfPositions from small sample data" classname="MainTest" time="0.02"/>
   <testcase name="elf has noneWest if there are not any elves to the west, north west or north east" classname="MainTest" time="0.001"/>
-  <testcase name="proposed move for elve in small sample data" classname="MainTest" time="0.005"/>
+  <testcase name="elf has a proposed move west if using moveSelector[2]" classname="MainTest" time="0.005"/>
+  <testcase name="proposed move for elves in small sample data" classname="MainTest" time="0.0"/>
   <testcase name="find proposed moves for all elves in small sample data" classname="MainTest" time="0.002"/>
-  <testcase name="find new elf positions for all elves in small sample data" classname="MainTest" time="0.001"/>
+  <testcase name="find new elf positions for all elves in small sample data" classname="MainTest" time="0.002"/>
   <testcase name="process small sample data over 10 rounds" classname="MainTest" time="0.001"/>
-  <testcase name="process large sample data over 10 rounds" classname="MainTest" time="0.005"/>
-  <testcase name="partone with sample input is 110" classname="MainTest" time="0.001"/>
-  <testcase name="partone with puzzle input is 3906" classname="MainTest" time="0.033"/>
-  <testcase name="part two with sample input is 20" classname="MainTest" time="0.0"/>
-  <testcase name="parttwo with puzzle input is 895" classname="MainTest" time="0.84"/>
+  <testcase name="process large sample data over 10 rounds" classname="MainTest" time="0.003"/>
+  <testcase name="partone with sample input is 110" classname="MainTest" time="0.002"/>
+  <testcase name="partone with puzzle input is 3906" classname="MainTest" time="0.03"/>
+  <testcase name="part two with sample input is 20" classname="MainTest" time="0.001"/>
+  <testcase name="parttwo with puzzle input is 895" classname="MainTest" time="0.806"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

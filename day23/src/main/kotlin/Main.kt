@@ -2,7 +2,7 @@ data class ElfPosition(val x:Int, val y:Int) {
     fun proposedMove(elfPositions:ElfPositions, round:Int):ElfPosition {
         if (noneAnyWhere(elfPositions)) return this
         val moveIndex = (0..3).firstOrNull { moveSelectors[it.indexFor(round)].positionsAreClear(this, elfPositions) }
-        return if (moveIndex != null) moveSelectors[moveIndex.indexFor(round)].move(this) else this
+        return moveIndex?.let {moveSelectors[it.indexFor(round)].move(this)} ?: this
     }
 }
 
@@ -10,29 +10,25 @@ fun Int.indexFor(round:Int) = plus(round) % 4
 
 typealias ElfPositions = Set<ElfPosition>
 
-fun List<String>.toElfPositions():ElfPositions {
-    val elfPositions = mutableSetOf<ElfPosition>()
-    forEachIndexed{y, line ->
-        line.forEachIndexed {x, char ->
-            if (char == '#') elfPositions.add(ElfPosition(x,y))
+fun List<String>.toElfPositions() = flatMapIndexed{y, line ->
+        line.mapIndexedNotNull{x, char ->
+            if (char == '#') ElfPosition(x,y) else null
         }
-    }
-    return elfPositions
-}
+    }.toSet()
 
-fun ElfPosition.noneNorth(others:ElfPositions) = (-1..1).none{others.contains(ElfPosition(x + it, y - 1))}
-fun ElfPosition.noneSouth(others:ElfPositions) = (-1..1).none{others.contains(ElfPosition(x + it, y + 1))}
-fun ElfPosition.noneWest(others:ElfPositions) = (-1..1).none{others.contains(ElfPosition(x - 1, y + it))}
-fun ElfPosition.noneEast(others:ElfPositions) = (-1..1).none{others.contains(ElfPosition(x + 1, y + it))}
+fun ElfPosition.noneNorth(others:ElfPositions) = (-1..1).none{ElfPosition(x + it, y - 1) in others}
+fun ElfPosition.noneSouth(others:ElfPositions) = (-1..1).none{ElfPosition(x + it, y + 1) in others}
+fun ElfPosition.noneWest(others:ElfPositions) = (-1..1).none{ElfPosition(x - 1, y + it) in others}
+fun ElfPosition.noneEast(others:ElfPositions) = (-1..1).none{ElfPosition(x + 1, y + it) in others}
 fun ElfPosition.noneAnyWhere(others:ElfPositions) = noneNorth(others) && noneSouth(others) && noneWest(others) && noneEast(others)
 
 data class MoveSelector (val positionsAreClear:ElfPosition.(ElfPositions)-> Boolean, val move:(ElfPosition)->ElfPosition)
 
 val moveSelectors = listOf(
-    MoveSelector (ElfPosition::noneNorth) { p -> ElfPosition(p.x, p.y - 1) },
-    MoveSelector (ElfPosition::noneSouth) { p -> ElfPosition(p.x, p.y + 1) },
-    MoveSelector (ElfPosition::noneWest) { p -> ElfPosition(p.x - 1, p.y) },
-    MoveSelector (ElfPosition::noneEast) { p -> ElfPosition(p.x + 1, p.y) }
+    MoveSelector(ElfPosition::noneNorth) { p -> ElfPosition(p.x, p.y - 1) },
+    MoveSelector(ElfPosition::noneSouth) { p -> ElfPosition(p.x, p.y + 1) },
+    MoveSelector(ElfPosition::noneWest) { p -> ElfPosition(p.x - 1, p.y) },
+    MoveSelector(ElfPosition::noneEast) { p -> ElfPosition(p.x + 1, p.y) }
 )
 
 data class ProposedMove(val elfPosition: ElfPosition, val newElfPosition: ElfPosition)
@@ -40,7 +36,7 @@ data class ProposedMove(val elfPosition: ElfPosition, val newElfPosition: ElfPos
 fun ElfPositions.findProposedMoves(round:Int, moveRegister:MutableMap<ElfPosition, Int>) =
     map{ elfPosition ->
         val proposedElfPosition = elfPosition.proposedMove(this, round)
-        moveRegister[proposedElfPosition] = (moveRegister[proposedElfPosition] ?: 0) + 1
+        moveRegister[proposedElfPosition] = moveRegister.getOrDefault(proposedElfPosition,0) + 1
         ProposedMove(elfPosition, proposedElfPosition)
     }
 
@@ -53,7 +49,7 @@ fun ElfPositions.newElfPositions(round:Int):ElfPositions {
 }
 
 fun ElfPositions.moveElves(rounds:Int):ElfPositions =
-    (0..(rounds - 1)).fold(this) { elfPosition,  round -> elfPosition.newElfPositions(round) }
+    (0 until rounds).fold(this) { elfPosition, round -> elfPosition.newElfPositions(round) }
 
 fun partOne(data:List<String>):Int {
     val elfPositions = data.toElfPositions()
