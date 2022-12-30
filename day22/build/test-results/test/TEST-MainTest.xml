@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-30T09:20:40" hostname="MacBook-Pro-2" time="0.201">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-12-30T18:03:30" hostname="MacBook-Pro-2" time="0.218">
   <properties/>
-  <testcase name="parse instructions corrctly" classname="MainTest" time="0.026"/>
-  <testcase name="create map" classname="MainTest" time="0.013"/>
-  <testcase name="turn person right" classname="MainTest" time="0.002"/>
+  <testcase name="parse instructions corrctly" classname="MainTest" time="0.029"/>
+  <testcase name="create map" classname="MainTest" time="0.014"/>
+  <testcase name="turn person right" classname="MainTest" time="0.001"/>
   <testcase name="turn person left" classname="MainTest" time="0.001"/>
-  <testcase name="move person 1 right" classname="MainTest" time="0.001"/>
-  <testcase name="move person 3 right so that it is blocked" classname="MainTest" time="0.001"/>
-  <testcase name="part one with puzzle input" classname="MainTest" time="0.057"/>
+  <testcase name="move person 1 right" classname="MainTest" time="0.002"/>
+  <testcase name="move person 3 right so that it is blocked" classname="MainTest" time="0.0"/>
+  <testcase name="part one with puzzle input" classname="MainTest" time="0.063"/>
   <testcase name="positions for a line" classname="MainTest" time="0.002"/>
   <testcase name="update map with all initial next positions for each tile" classname="MainTest" time="0.015"/>
-  <testcase name="update first line of the map with next positions from line that maps to the top line" classname="MainTest" time="0.013"/>
-  <testcase name="udpate all edges" classname="MainTest" time="0.013"/>
-  <testcase name="part two with puzzle input" classname="MainTest" time="0.03"/>
+  <testcase name="update first line of the map with next positions from line that maps to the top line" classname="MainTest" time="0.015"/>
+  <testcase name="udpate all edges" classname="MainTest" time="0.014"/>
+  <testcase name="part two with puzzle input" classname="MainTest" time="0.029"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -18,11 +18,14 @@ tailrec fun String.parseToInstructions(instructions: List<Instruction> = listOf(
         (first() == 'L') -> drop(1).parseToInstructions(instructions + Instruction.RotateLeft)
         (first() == 'R') -> drop(1).parseToInstructions(instructions + Instruction.RotateRight)
         else -> {
-            val numberString = takeWhile { it != 'R' && it != 'L' }
-            val move = Instruction.Move(numberString.toInt() )
-            drop(numberString.length ).parseToInstructions(instructions + move)
+            val (move, lengthToDrop) = getMoveInstriction()
+            drop(lengthToDrop ).parseToInstructions(instructions + move)
         }
     }
+
+fun String.getMoveInstriction() = Pair(Instruction.Move(numberString().toInt() ), numberString().length)
+
+fun String.numberString() = takeWhile { it != 'R' && it != 'L' }
 
 fun List<String>.createMap():Map<Position, Tile> =
     flatMapIndexed { y, line ->
@@ -31,10 +34,9 @@ fun List<String>.createMap():Map<Position, Tile> =
         }
     }.toMap()
 
-
 val rightMap = mapOf("E" to "S", "S" to "W", "W" to "N", "N" to "E" )
 val leftMap = mapOf("E" to "N", "N" to "W", "W" to "S", "S" to "E" )
-val offsets = mapOf("E" to Position(1,0), "W" to Position(-1,0), "S" to Position(0,1), "N" to Position(0,-1))
+val offsets = mapOf("E" to Position(1,0), "S" to Position(0,1), "W" to Position(-1,0), "N" to Position(0,-1))
 
 data class Person(val tile:Tile, val direction:String, val map:Map<Position, Tile>) {
     fun turnRight() = copy( direction =   rightMap.getValue(direction) )
@@ -66,7 +68,7 @@ fun partOne(data:List<String>, edgeMap:Map<Line, Line>):Int {
     val map = prepareMap(data, edgeMap)
     val movedPerson = map.toPerson().process(instructions)
     val (x,y ) = movedPerson.positionOnMap()
-    return y * 1000 + 4 * x + rightMap.keys.indexOfFirst { it == movedPerson.direction }
+    return y * 1000 + 4 * x + offsets.keys.indexOfFirst { it == movedPerson.direction }
 }
 
 //part two
