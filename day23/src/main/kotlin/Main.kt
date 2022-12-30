@@ -49,7 +49,7 @@ fun ElfPositions.newElfPositions(round:Int):ElfPositions {
 }
 
 fun ElfPositions.moveElves(rounds:Int):ElfPositions =
-    (0 until rounds).fold(this) { elfPosition, round -> elfPosition.newElfPositions(round) }
+    (0 until rounds).fold(this) { elfPositions, round -> elfPositions.newElfPositions(round) }
 
 fun partOne(data:List<String>):Int {
     val elfPositions = data.toElfPositions()
