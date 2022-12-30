@@ -12,13 +12,12 @@ sealed class Job {
 }
 
 class Node(var job:Job) {
-    fun total():Long {
-        if (job is Job.LoneNumber) return (job as Job.LoneNumber).value
+    fun total():Long =
+        if (job is Job.LoneNumber) (job as Job.LoneNumber).value
         else {
             val mathOperation = (job as Job.MathOperation)
-            return mathOperation.operation( mathOperation.node1.total(), mathOperation.node2.total())
+            mathOperation.operation( mathOperation.node1.total(), mathOperation.node2.total())
         }
-    }
 }
 
 fun List<String>.parse():Map<String, Node> {
@@ -28,7 +27,7 @@ fun List<String>.parse():Map<String, Node> {
         if (line.lineIsANumber()) {
             node.job = Job.LoneNumber(line.param(1).toLong())
         } else {
-            node.job = line.getMathOperations(nodeRegister, node)
+            node.job = line.getMathOperations(nodeRegister)
         }
     }
     return nodeRegister
@@ -39,7 +38,7 @@ fun List<String>.registerNodes(nodeRegister: MutableMap<String, Node> = mutableM
     return nodeRegister
 }
 
-fun String.getMathOperations(nodeRegister: Map<String, Node>, node: Node) =
+fun String.getMathOperations(nodeRegister: Map<String, Node>) =
     Job.MathOperation(getNodeForParameter(1, nodeRegister), getNodeForParameter(3, nodeRegister), oper())
 
 fun String.getNodeForParameter(n:Int, nodeRegister:Map<String, Node>) = nodeRegister.getValue(param(n))
@@ -56,7 +55,7 @@ fun partOne(data:List<String>):Long {
 }
 
 fun partTwo(data:List<String>):Long {
-    val nodes = puzzleInput.parse()
+    val nodes = data.parse()
     val zfhnTotal = nodes.getValue("zfhn").total()
     val humnNode = nodes.getValue("humn")
     val jgtbNode =  nodes.getValue("jgtb")
@@ -68,8 +67,8 @@ fun findNumber(target:Long, otherNode:Node, human:Node, min:Long, max:Long):Long
     human.job = Job.LoneNumber(testValue)
     val total = otherNode.total()
     if (target == total) return testValue
-    if (target < total)
-        return findNumber(target, otherNode, human, testValue, max )
+    return if (target < total)
+        findNumber(target, otherNode, human, testValue, max )
     else
-        return findNumber(target, otherNode, human, min, testValue )
+        findNumber(target, otherNode, human, min, testValue )
 }
