@@ -37,8 +37,8 @@ val leftMap = mapOf("E" to "N", "N" to "W", "W" to "S", "S" to "E" )
 val offsets = mapOf("E" to Position(1,0), "W" to Position(-1,0), "S" to Position(0,1), "N" to Position(0,-1))
 
 data class Person(val tile:Tile, val direction:String, val map:Map<Position, Tile>) {
-    fun turnRight() = copy( direction =   rightMap[direction] ?: "E")
-    fun turnLeft() = copy( direction = leftMap[direction] ?: "E" )
+    fun turnRight() = copy( direction =   rightMap.getValue(direction) )
+    fun turnLeft() = copy( direction = leftMap.getValue(direction) )
 
     fun move(qty:Int):Person {
         if (qty == 0) return this
@@ -71,9 +71,10 @@ fun partOne(data:List<String>, edgeMap:Map<Line, Line>):Int {
 
 //part two
 data class Line(val start:Position, val end:Position, val perpendicularDirection:String = "") {
+    val incX = (end.x - start.x) % 2
+    val incY = (end.y - start.y) % 2
+
     fun positions():List<Position> {
-        val incX = if (start.x < end.x) 1 else if (start.x > end.x) -1 else 0
-        val incY = if (start.y < end.y) 1 else if (start.y > end.y) -1 else 0
         var (x,y) = start
         val result = mutableListOf(start)
         while (x != end.x || y != end.y) {
@@ -82,7 +83,6 @@ data class Line(val start:Position, val end:Position, val perpendicularDirection
         }
         return result
     }
-    fun isVertical() = start.x == end.x
 }
 
 fun prepareMap(data:List<String>, edgeMap:Map<Line, Line>):Map<Position, Tile> =
@@ -106,7 +106,7 @@ fun Map<Position, Tile>.updateEdges(edgeMap: Map<Line, Line>) {
 }
 
 fun Map<Position, Tile>.updateEdge(fromLine:Line, toLine:Line) {
-    val direction = if (fromLine.isVertical()) {
+    val direction = if (fromLine.start.x == fromLine.end.x) {
         if (getValue(fromLine.start).next.containsKey("E")) "W" else "E"
     } else {
         if (getValue(fromLine.start).next.containsKey("S")) "N" else "S"
