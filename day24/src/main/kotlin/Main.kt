@@ -88,19 +88,23 @@ class Valley(
 ) {
     val start = Position(xBounds.first, yBounds.first - 1)
     val goal = Position(xBounds.last, yBounds.last + 1)
-    val snowMemory = mutableMapOf<Pair<Position, Int>, Boolean>()
 
     fun nextStates(state: State): List<State> {
         return Position.allDirections.map {direction ->  state.position + direction }
             .filter { position ->
-                (position.isWithinBounds() || position == start || position == goal) && !positionContainsSnow(position, state.time + 1 )  //position !in getSnow(state.time + 1).keys
+                (position.isWithinBounds() || position == start || position == goal) && !positionContainsSnow(position, state.time + 1 )
             }
             .map { State(it, state.time + 1) }
     }
 
     private fun positionContainsSnow(position:Position, time:Int) =
-        position.y < flakesOnRow.size && position.x < flakesOnCol.size &&
-                (flakesOnRow[position.y].map{it.after(time)}.any{ it == position} || flakesOnCol[position.x].map{it.after(time)}.any{ it == position})
+        flakesFromRowOccupyPosition(position, time) || flakesFromColOccupyPosition(position, time)
+
+    private fun flakesFromRowOccupyPosition(position:Position, time:Int) =
+        position.y < flakesOnRow.size && flakesOnRow[position.y].any{ it.after(time) == position}
+
+    private fun flakesFromColOccupyPosition(position:Position, time:Int) =
+        position.x < flakesOnCol.size && flakesOnCol[position.x].any{ it.after(time) == position}
 
     private fun Position.isWithinBounds() = (x in xBounds && y in yBounds)
 }
