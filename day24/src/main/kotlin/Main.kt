@@ -38,14 +38,14 @@ data class Position(val x: Int, val y: Int)  {
 fun aStar(initialState: State, valley: Valley, goal: Position): State {
     val cameFrom = mutableMapOf<State, State>()
     val costSoFar = mutableMapOf(initialState to initialState.time)
-    fun estimatedCostToGoal(state: State) = (valley.goal - state.location).manhattanDistance
+    fun estimatedCostToGoal(state: State) = (valley.goal - state.position).manhattanDistance
     val frontier = PriorityQueue(compareBy<State> { costSoFar.getValue(it) + estimatedCostToGoal(it) })
     frontier.add(initialState)
 
     while (frontier.isNotEmpty()) {
         val current = frontier.poll()
 
-        if (current.location == goal) return current
+        if (current.position == goal) return current
 
         valley.nextStates(current).forEach { next ->
             val newCost = costSoFar.getValue(current) + 1
@@ -60,7 +60,7 @@ fun aStar(initialState: State, valley: Valley, goal: Position): State {
     throw Exception("Frontier was empty before goal was reached")
 }
 
-data class State(val location: Position, val time: Int)
+data class State(val position: Position, val time: Int)
 
 interface Flake {
     val x:Int
@@ -88,9 +88,10 @@ class Valley(
 ) {
     val start = Position(xBounds.first, yBounds.first - 1)
     val goal = Position(xBounds.last, yBounds.last + 1)
+    val snowMemory = mutableMapOf<Pair<Position, Int>, Boolean>()
 
     fun nextStates(state: State): List<State> {
-        return Position.allDirections.map {direction ->  state.location + direction }
+        return Position.allDirections.map {direction ->  state.position + direction }
             .filter { position ->
                 (position.isWithinBounds() || position == start || position == goal) && !positionContainsSnow(position, state.time + 1 )  //position !in getSnow(state.time + 1).keys
             }
