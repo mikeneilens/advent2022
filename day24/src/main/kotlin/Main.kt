@@ -122,6 +122,6 @@ fun parse(input: List<String>): Valley {
         }
     }
     val flakesOnRow =(0..(input.size - 2)).map { y -> flakes.filter { it.y == y } }
-    val flakesOnCol = listOf<List<Flake>>() + (0..(input.first().length - 2)).map { x -> flakes.filter { it.x == x } }
+    val flakesOnCol = (0..(input.first().length - 2)).map { x -> flakes.filter { it.x == x } }
     return Valley(flakesOnRow, flakesOnCol, 1..input.first().length -2, 1..input.size -2 )
 }
