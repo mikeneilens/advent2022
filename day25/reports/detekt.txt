@@ -1,0 +1,5 @@
+MagicNumber - [powerOfFive] at /Users/michaelneilens/github/advent2022/day25/src/main/kotlin/Main.kt:3:23 - Signature=Main.kt$20
+MagicNumber - [snafuDigitToBase10] at /Users/michaelneilens/github/advent2022/day25/src/main/kotlin/Main.kt:7:51 - Signature=Main.kt$2L
+MagicNumber - [<anonymous>] at /Users/michaelneilens/github/advent2022/day25/src/main/kotlin/Main.kt:20:31 - Signature=Main.kt$3L
+MagicNumber - [<anonymous>] at /Users/michaelneilens/github/advent2022/day25/src/main/kotlin/Main.kt:20:35 - Signature=Main.kt$5L
+MagicNumber - [<anonymous>] at /Users/michaelneilens/github/advent2022/day25/src/main/kotlin/Main.kt:22:48 - Signature=Main.kt$5L

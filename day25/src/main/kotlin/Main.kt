@@ -7,7 +7,8 @@ fun String.snafuToBase10Number() = reversed().mapIndexed { i, n -> n.snafuDigitT
 fun Char.snafuDigitToBase10() = if (this == '=') -2L else if (this == '-') -1L else this.toString().toLong()
 fun Long.base10ToSnafuDigit() =  if (this >= 0L) this.toString() else if (this == -1L) "-" else "="
 
-fun Long.base10NumberToSnafu() = base10toBase5(powerOfFive.reversed()).base5DigitsToSnafuDigits().snafuDigitsToSnafuString()
+fun Long.base10NumberToSnafu() =
+    base10toBase5(powerOfFive.reversed()).base5DigitsToSnafuDigits().snafuDigitsToSnafuString()
 
 fun Long.base10toBase5(powerOfFive:List<Long>, result:List<Long> = emptyList()):List<Long> =
     if (powerOfFive.isEmpty()) result
