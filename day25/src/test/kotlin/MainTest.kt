@@ -22,17 +22,17 @@ class MainTest: WordSpec( {
             sampleSNAFU.forEach { line ->
                 val snafu = line.split(",")[0]
                 val number = line.split(",")[1].toLong()
-                snafu.snafuToDecimalNumber() shouldBe number
+                snafu.snafuToBase10Number() shouldBe number
             }
         }
         "convert a number to a base 5 number" {
-            55L.toBase5(powerOfFive.reversed()).dropWhile { it == 0L } shouldBe listOf(2L,1L,0L) // i.e. 210
+            55L.base10toBase5(powerOfFive.reversed()).dropWhile { it == 0L } shouldBe listOf(2L,1L,0L) // i.e. 210
         }
         "convert a decimal number to SNAFU" {
             sampleSNAFU.forEach { line ->
                 val snafu = line.split(",")[0]
                 val number = line.split(",")[1].toLong()
-                number.decimalNumberToSnafu() shouldBe snafu
+                number.base10NumberToSnafu() shouldBe snafu
             }
         }
         "part one with puzzle input gives 2-1-110-=01-1-0-0==2" {

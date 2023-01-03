@@ -2,18 +2,18 @@ import kotlin.math.pow
 
 val powerOfFive = (0..20).map{5.0.pow(it).toLong()}
 
-fun String.snafuToDecimalNumber() = reversed().mapIndexed { i, n -> n.snafuDigitToDecimal() * powerOfFive[i]}.sum()
+fun String.snafuToBase10Number() = reversed().mapIndexed { i, n -> n.snafuDigitToBase10() * powerOfFive[i]}.sum()
 
-fun Char.snafuDigitToDecimal() = if (this == '=') -2L else if (this == '-') -1L else this.toString().toLong()
-fun Long.decimalToSnafuDigit() =  if (this >= 0L) this.toString() else if (this == -1L) "-" else "="
+fun Char.snafuDigitToBase10() = if (this == '=') -2L else if (this == '-') -1L else this.toString().toLong()
+fun Long.base10ToSnafuDigit() =  if (this >= 0L) this.toString() else if (this == -1L) "-" else "="
 
-fun Long.decimalNumberToSnafu() = toBase5(powerOfFive.reversed()).correctDigits().toSnafuString()
+fun Long.base10NumberToSnafu() = base10toBase5(powerOfFive.reversed()).base5DigitsToSnafuDigits().snafuDigitsToSnafuString()
 
-fun Long.toBase5(powerOfFive:List<Long>, result:List<Long> = emptyList()):List<Long> =
+fun Long.base10toBase5(powerOfFive:List<Long>, result:List<Long> = emptyList()):List<Long> =
     if (powerOfFive.isEmpty()) result
-    else (this % powerOfFive.first()).toBase5(powerOfFive.drop(1), result + this / powerOfFive.first())
+    else (this % powerOfFive.first()).base10toBase5(powerOfFive.drop(1), result + this / powerOfFive.first())
 
-fun List<Long>.correctDigits():List<Long> {
+fun List<Long>.base5DigitsToSnafuDigits():List<Long> {
     val snafuDigits = this.toMutableList()
     indices.forEach { i ->
         if (snafuDigits[i] in 3L..5L) {
@@ -21,9 +21,9 @@ fun List<Long>.correctDigits():List<Long> {
             snafuDigits[i] =  snafuDigits[i] - 5L
         }
     }
-    return if (snafuDigits.toList() == this) this else snafuDigits.correctDigits()
+    return if (snafuDigits.toList() == this) this else snafuDigits.base5DigitsToSnafuDigits()
 }
 
-fun List<Long>.toSnafuString() = joinToString("",transform = Long::decimalToSnafuDigit).trim { it == '0' }
+fun List<Long>.snafuDigitsToSnafuString() = joinToString("",transform = Long::base10ToSnafuDigit).trim { it == '0' }
 
-fun partOne(data:List<String>):String = data.sumOf(String::snafuToDecimalNumber).decimalNumberToSnafu()
+fun partOne(data:List<String>):String = data.sumOf(String::snafuToBase10Number).base10NumberToSnafu()
